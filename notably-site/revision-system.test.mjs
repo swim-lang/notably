@@ -20,7 +20,6 @@ const expectedReviewIds = [
   "value",
   "process",
   "callout",
-  "services",
   "audience",
   "pov",
   "rim",
