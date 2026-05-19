@@ -1,7 +1,7 @@
 /* ════════════════════════════════════════════════════════════════
-   NOTABLY — Soft highlighter yellow preview styles
+   NOTABLY — Single highlighter yellow preview styles
    Same structure as the main site, with all accent colors translated
-   into one light highlighter yellow family for review.
+   into the same light highlighter yellow used on the "Right" callout.
    ════════════════════════════════════════════════════════════════ */
 
 
@@ -31,12 +31,12 @@
   --c-off-black: #272826;
   --c-off-white: #FBFAF5;
   --c-footer-bg: #FBFAF6;
-  --c-pink: #F8F2A8;          /* soft highlighter yellow */
-  --c-pink-deep: #F4E985;     /* slightly richer yellow for buttons + bands */
-  --c-pink-hover: #E9D95F;    /* deeper yellow hover mask */
-  --c-mint: #FAF5B8;          /* pale yellow companion */
-  --c-mint-soft: #FCF8D2;     /* soft yellow note variant */
-  --c-yellow: #F6EC8E;        /* light highlighter yellow */
+  --c-pink: #F8F2A8;          /* single highlighter yellow */
+  --c-pink-deep: #F8F2A8;     /* single highlighter yellow */
+  --c-pink-hover: #F8F2A8;    /* single highlighter yellow */
+  --c-mint: #F8F2A8;          /* single highlighter yellow */
+  --c-mint-soft: #F8F2A8;     /* single highlighter yellow */
+  --c-yellow: #F8F2A8;        /* single highlighter yellow */
 
   /* Fonts */
   --font-sans: "Rhetorik Sans Trial", "DM Sans", system-ui, -apple-system, "Helvetica Neue", sans-serif;
