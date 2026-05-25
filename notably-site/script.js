@@ -1,5 +1,5 @@
 // Notably — minimal client JS
-// Two jobs: toggle the mobile nav, handle the newsletter form gracefully.
+// Toggle nav and handle lightweight static-site forms.
 
 (function () {
   "use strict";
@@ -58,6 +58,39 @@
 
       // TODO: replace with real submit
       // fetch("/api/subscribe", { method: "POST", body: JSON.stringify({ email }) })
+    });
+  }
+
+  /* ─── Start-a-search form ─────────────────────────────────── */
+  //
+  // Static preview v1: compose a mailto draft from the intake fields.
+  // Swap this for a form backend when the production endpoint is chosen.
+
+  const searchForm = document.querySelector("[data-search-form]");
+  if (searchForm) {
+    const status = searchForm.querySelector(".contact-form__status");
+
+    searchForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      if (!searchForm.reportValidity()) return;
+
+      const data = new FormData(searchForm);
+      const lines = [
+        ["Name", data.get("name")],
+        ["Email", data.get("email")],
+        ["Company", data.get("company")],
+        ["Role or function", data.get("role")],
+        ["Timing", data.get("timing")],
+        ["Context", data.get("context")],
+      ]
+        .map(([label, value]) => `${label}: ${(value || "").toString().trim() || "-"}`)
+        .join("\n");
+
+      const subject = encodeURIComponent("Starting a Search");
+      const body = encodeURIComponent(lines);
+      if (status) status.textContent = "Opening an email draft...";
+      window.location.href = `mailto:julie@notably.com?subject=${subject}&body=${body}`;
     });
   }
 

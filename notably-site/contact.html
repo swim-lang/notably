@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Start a Search — Notably</title>
+    <meta name="description" content="Contact Julie Anich at Notably to start an accounting, finance, or tax recruiting search." />
+    <meta property="og:title" content="Start a Search — Notably" />
+    <meta property="og:description" content="Tell Notably about the accounting, finance, or tax hire you need to make." />
+    <meta property="og:type" content="website" />
+    <link rel="stylesheet" href="styles.css?v=yellow-main" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&family=Newsreader:ital,wght@0,400;1,400&display=swap" rel="stylesheet" />
+    <script>document.documentElement.classList.add("js");</script>
+  </head>
+  <body>
+
+    <!-- ─────────────────────────  NAV  ───────────────────────── -->
+    <header class="nav" role="banner" data-review-id="nav">
+      <div class="nav__inner">
+        <a class="nav__logo" href="index.html" aria-label="Notably home">
+          <img src="assets/logo-nav-yellow.png" alt="Notably" />
+        </a>
+        <nav class="nav__links" aria-label="Primary">
+          <a href="index.html#hire">Hire Talent</a>
+          <a href="index.html#julie">About Julie</a>
+          <a href="find-job.html">Find a Job</a>
+          <a href="contact.html" class="btn btn--primary" aria-current="page">Start a Search</a>
+        </nav>
+        <button class="nav__toggle" type="button" aria-controls="mobile-menu" aria-expanded="false" aria-label="Open menu">
+          <span></span><span></span>
+        </button>
+      </div>
+      <div class="nav__mobile" id="mobile-menu" hidden>
+        <a href="index.html#hire">Hire Talent</a>
+        <a href="index.html#julie">About Julie</a>
+        <a href="find-job.html">Find a Job</a>
+        <a href="contact.html" class="btn btn--primary" aria-current="page">Start a Search</a>
+      </div>
+    </header>
+
+    <main>
+      <!-- ─────────────────────────  CONTACT PAGE  ───────────────────────── -->
+      <section class="contact-page" data-review-id="contact">
+        <div class="contact-hero">
+          <div class="contact-hero__copy">
+            <h1 class="contact-hero__title">Tell Us About the Hire You Need to Make.</h1>
+            <p class="contact-hero__intro">Share the role, the team, and what would make the search successful. Julie will follow up with a practical next step for accounting, finance, or tax hiring.</p>
+          </div>
+
+          <aside class="contact-card" aria-label="Start a search form">
+            <h2>Start with the basics.</h2>
+            <form class="contact-form" action="mailto:julie@notably.com" method="post" enctype="text/plain" data-search-form>
+              <div class="contact-form__row">
+                <label for="search-name">Name</label>
+                <input id="search-name" name="name" type="text" autocomplete="name" required />
+              </div>
+              <div class="contact-form__row">
+                <label for="search-email">Email</label>
+                <input id="search-email" name="email" type="email" autocomplete="email" required />
+              </div>
+              <div class="contact-form__row">
+                <label for="search-company">Company</label>
+                <input id="search-company" name="company" type="text" autocomplete="organization" />
+              </div>
+              <div class="contact-form__row">
+                <label for="search-role">Role or function</label>
+                <input id="search-role" name="role" type="text" placeholder="Controller, tax, FP&A, etc." />
+              </div>
+              <div class="contact-form__row">
+                <label for="search-timing">Timing</label>
+                <select id="search-timing" name="timing">
+                  <option value="">Select one</option>
+                  <option>Ready now</option>
+                  <option>Next 30 days</option>
+                  <option>Next quarter</option>
+                  <option>Still exploring</option>
+                </select>
+              </div>
+              <div class="contact-form__row">
+                <label for="search-context">What would be helpful to know?</label>
+                <textarea id="search-context" name="context" rows="5" required></textarea>
+              </div>
+              <button class="btn btn--secondary contact-form__submit" type="submit">Send Search Details</button>
+              <p class="contact-form__status" role="status" aria-live="polite"></p>
+            </form>
+          </aside>
+        </div>
+
+        <div class="contact-prompts" aria-label="Helpful context to include">
+          <article class="contact-prompt">
+            <h2>What to include</h2>
+            <p>Role title, location or remote expectations, target timing, must-have experience, and anything that has made the search tricky so far.</p>
+          </article>
+          <article class="contact-prompt">
+            <h2>What happens next</h2>
+            <p>Julie will get a sharper read on fit, clarify the hiring priorities, and recommend whether a focused search makes sense.</p>
+          </article>
+          <article class="contact-prompt">
+            <h2>Good fit for</h2>
+            <p>Accounting, finance, and tax searches where technical fluency, judgment, and trust matter as much as resume volume.</p>
+          </article>
+        </div>
+
+        <aside class="contact-note">
+          <h2>Not sure where to start?</h2>
+          <p>Send the messy version. A quick note about the seat, the team, or the hiring problem is enough for a first conversation.</p>
+        </aside>
+      </section>
+    </main>
+
+    <!-- ─────────────────────────  FOOTER  ───────────────────────── -->
+    <footer class="footer" role="contentinfo" data-review-id="footer">
+      <div class="footer__row">
+        <div class="footer__left">
+          <p class="footer__tagline">Accounting, Finance, and Tax Recruiting Led by Julie Anich.</p>
+          <div class="footer__contact">
+            <nav class="footer__nav" aria-label="Footer">
+              <a href="index.html#hire">Hire Talent</a>
+              <a href="index.html#julie">About Julie</a>
+              <a href="find-job.html">Find a Job</a>
+              <a href="contact.html" aria-current="page">Contact</a>
+              <a href="https://www.rimrp.com/" target="_blank" rel="noopener">RIM ↗</a>
+              <a href="https://www.linkedin.com/" target="_blank" rel="noopener">LinkedIn ↗</a>
+            </nav>
+            <div class="footer__where">
+              <span>Denver, Colorado</span>
+              <a href="mailto:julie@notably.com">julie@notably.com</a>
+            </div>
+          </div>
+        </div>
+        <div class="footer__right">
+          <img class="footer__lines" src="assets/logo-footer-yellow.png" alt="" aria-hidden="true" />
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      window.NOTABLY_REVIEW_CONFIG = {
+        supabaseUrl: "https://qanzfomqjhkctuwmgzat.supabase.co",
+        supabaseAnonKey: "sb_publishable_pkRxxm6FCJgzgPN8gSa9SQ_oiBEsVzi",
+      };
+    </script>
+    <script src="script.js"></script>
+  </body>
+</html>

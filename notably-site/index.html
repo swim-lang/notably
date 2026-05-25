@@ -8,7 +8,7 @@
     <meta property="og:title" content="Notably — Standout Hires for Growing Teams" />
     <meta property="og:description" content="Accounting, finance, and tax recruiting led by Julie Anich." />
     <meta property="og:type" content="website" />
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="styles.css?v=yellow-main" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&family=Newsreader:ital,wght@0,400;1,400&display=swap" rel="stylesheet" />
@@ -20,13 +20,13 @@
     <header class="nav" role="banner" data-review-id="nav">
       <div class="nav__inner">
         <a class="nav__logo" href="/" aria-label="Notably home">
-          <img src="assets/logo-nav.png" alt="Notably" />
+          <img src="assets/logo-nav-yellow.png" alt="Notably" />
         </a>
         <nav class="nav__links" aria-label="Primary">
           <a href="#hire">Hire Talent</a>
-          <a href="mailto:julie@notably.com?subject=Exploring%20Accounting%2C%20Finance%2C%20or%20Tax%20Opportunities">Find a Job</a>
           <a href="#julie">About Julie</a>
-          <a href="#start" class="btn btn--primary">Start a Search</a>
+          <a href="find-job.html">Find a Job</a>
+          <a href="contact.html" class="btn btn--primary">Start a Search</a>
         </nav>
         <button class="nav__toggle" type="button" aria-controls="mobile-menu" aria-expanded="false" aria-label="Open menu">
           <span></span><span></span>
@@ -34,9 +34,9 @@
       </div>
       <div class="nav__mobile" id="mobile-menu" hidden>
         <a href="#hire">Hire Talent</a>
-        <a href="mailto:julie@notably.com?subject=Exploring%20Accounting%2C%20Finance%2C%20or%20Tax%20Opportunities">Find a Job</a>
         <a href="#julie">About Julie</a>
-        <a href="#start" class="btn btn--primary">Start a Search</a>
+        <a href="find-job.html">Find a Job</a>
+        <a href="contact.html" class="btn btn--primary">Start a Search</a>
       </div>
     </header>
 
@@ -60,8 +60,8 @@
             Notably helps companies hire accounting, finance, and tax talent with more confidence, more clarity, and a sharper read on fit.
           </p>
           <div class="hero__ctas">
-            <a class="btn btn--primary" href="#start">Start a Search</a>
-            <a class="btn btn--secondary" href="mailto:julie@notably.com?subject=Exploring%20Accounting%2C%20Finance%2C%20or%20Tax%20Opportunities">Find a Job</a>
+            <a class="btn btn--primary" href="contact.html">Start a Search</a>
+            <a class="btn btn--secondary" href="find-job.html">Find a Job</a>
           </div>
         </div>
       </section>
@@ -163,28 +163,55 @@
       </section>
 
       <!-- ─────────────────────────  WHAT YOU GET / VALUE  ───────────────────────── -->
-      <section class="value" data-review-id="value">
+      <section class="value" id="value" data-review-id="value">
         <div class="value__head">
           <h2 class="value__headline">Four Things Better<br />Than a Bigger Inbox.</h2>
+          <p class="value__lead">Less sorting. More signal. A simple way to show the four things Julie brings into the search.</p>
         </div>
-        <ul class="value-list">
-          <li class="value-card value-card--pink">
-            <h3 class="value-card__title">Better Context</h3>
-            <p class="value-card__body">We start by understanding the role, the team, the business, and what success really needs to look like.</p>
-          </li>
-          <li class="value-card value-card--mint">
-            <h3 class="value-card__title">Better Screening</h3>
-            <p class="value-card__body">Candidates are evaluated with care, not passed along just to keep the process moving.</p>
-          </li>
-          <li class="value-card value-card--yellow">
-            <h3 class="value-card__title">Better Conversations</h3>
-            <p class="value-card__body">You get honest communication about strengths, gaps, expectations, and market realities.</p>
-          </li>
-          <li class="value-card value-card--pink">
-            <h3 class="value-card__title">Better Fit</h3>
-            <p class="value-card__body">The goal is not more resumes. The goal is a hire that makes sense.</p>
-          </li>
-        </ul>
+        <div class="value__canvas" aria-label="Four value cards">
+          <ul class="value-list">
+            <li class="value-card value-card--context">
+              <div class="value-card__meta">
+                <span class="value-card__num">01</span>
+                <span class="value-card__chip">read</span>
+              </div>
+              <h3 class="value-card__title">Better Context</h3>
+              <p class="value-card__body">Know the role, the team, and what success needs before the search gets loud.</p>
+            </li>
+            <li class="value-card value-card--screening">
+              <div class="value-card__meta">
+                <span class="value-card__num">02</span>
+                <span class="value-card__chip">screen</span>
+              </div>
+              <h3 class="value-card__title">Better Screening</h3>
+              <p class="value-card__body">Candidates are evaluated with care, so the shortlist starts sharper.</p>
+            </li>
+            <li class="value-card value-card--conversation">
+              <div class="value-card__meta">
+                <span class="value-card__num">03</span>
+                <span class="value-card__chip">clarify</span>
+              </div>
+              <h3 class="value-card__title">Better Conversations</h3>
+              <p class="value-card__body">Clear notes on strengths, gaps, timing, and what each candidate really wants.</p>
+            </li>
+            <li class="value-card value-card--fit">
+              <div class="value-card__meta">
+                <span class="value-card__num">04</span>
+                <span class="value-card__chip">choose</span>
+              </div>
+              <h3 class="value-card__title">Better Fit</h3>
+              <p class="value-card__body">The point is not more resumes. The point is a hire that makes sense.</p>
+            </li>
+            <li class="value-card value-card--read">
+              <div class="value-card__meta">
+                <span class="value-card__num">Julie’s Read</span>
+                <span class="value-card__chip">judge</span>
+              </div>
+              <h3 class="value-card__title">Less Inbox, More Judgment</h3>
+              <p class="value-card__body">A practical recruiting partner who can separate noise from signal.</p>
+            </li>
+          </ul>
+        </div>
       </section>
 
       <!-- ─────────────────────────  PROCESS  ───────────────────────── -->
@@ -272,7 +299,11 @@
         </div>
         <div class="rim__right">
           <p>Julie operates as an <strong>Independent Director, Placement Services</strong> with RIM Recruitment Professionals, giving clients the benefit of a focused recruiting partner supported by a broader professional recruitment platform.</p>
-          <p>That means you get the personal attention of someone who knows your search closely, with access to the tools, resources, and network of an established recruiting organization, including 100+ independent recruiters nationwide.</p>
+          <p>That means you get the personal attention of someone who knows your search closely, with access to the tools, resources, and network of an established recruiting organization.</p>
+          <aside class="rim__network" aria-label="RIM recruiter network">
+            <strong>100+</strong>
+            <span>independent recruiters Julie can team with nationwide.</span>
+          </aside>
           <p>Additional support for adjacent professional roles may be available through the broader RIM Recruitment Professionals network.</p>
           <a class="rim__card" href="https://www.rimrp.com/" target="_blank" rel="noopener">
             <span class="rim__mark" aria-hidden="true">R</span>
@@ -289,11 +320,11 @@
       <section class="julie" id="julie" data-review-id="julie">
         <div class="julie__photo" role="img" aria-label="Julie Anich portrait"></div>
         <div class="julie__body">
-          <h2 class="julie__headline">She Has Lived in the World She Now Recruits For.</h2>
+          <h2 class="julie__headline">Julie Has Lived in the World She Now Recruits For.</h2>
           <p>Julie brings something rare to accounting and finance recruiting. With experience working as a CPA in public accounting, as well as in accounting and finance specialized recruitment, she understands the technical side of the roles as well as the human side of the hiring process.</p>
           <p>Her approach is consultative, thoughtful, and direct, helping companies make hiring decisions with more confidence and less noise.</p>
           <div class="julie__ctas">
-            <a class="btn btn--primary" href="#julie">Learn More About Julie</a>
+            <a class="btn btn--primary" href="https://www.linkedin.com/" target="_blank" rel="noopener">Learn More About Julie</a>
           </div>
         </div>
       </section>
@@ -324,28 +355,28 @@
           <ul class="inbox__list">
             <li class="inbox__row">
               <span class="inbox__unread"></span>
-              <span class="inbox__avatar"><img src="assets/inbox-avatar.jpg" alt="" /></span>
+              <span class="inbox__avatar"><img src="assets/inbox-avatar-woman.jpg" alt="" /></span>
               <span class="inbox__sender">Notably</span>
               <span class="inbox__subject">How to Keep Strong Candidates Engaged</span>
               <span class="inbox__time">9:14 AM</span>
             </li>
             <li class="inbox__row">
               <span class="inbox__unread"></span>
-              <span class="inbox__avatar"><img src="assets/inbox-avatar.jpg" alt="" /></span>
+              <span class="inbox__avatar"><img src="assets/inbox-avatar-woman.jpg" alt="" /></span>
               <span class="inbox__sender">Notably</span>
               <span class="inbox__subject">What to Clarify Before Opening a Search</span>
               <span class="inbox__time">Tue</span>
             </li>
             <li class="inbox__row">
               <span class="inbox__unread"></span>
-              <span class="inbox__avatar"><img src="assets/inbox-avatar.jpg" alt="" /></span>
+              <span class="inbox__avatar"><img src="assets/inbox-avatar-woman.jpg" alt="" /></span>
               <span class="inbox__sender">Notably</span>
               <span class="inbox__subject">Why &ldquo;Good on Paper&rdquo; Is Not Always Enough</span>
               <span class="inbox__time">Mon</span>
             </li>
             <li class="inbox__row">
               <span class="inbox__unread"></span>
-              <span class="inbox__avatar"><img src="assets/inbox-avatar.jpg" alt="" /></span>
+              <span class="inbox__avatar"><img src="assets/inbox-avatar-woman.jpg" alt="" /></span>
               <span class="inbox__sender">Notably</span>
               <span class="inbox__subject">Small Hiring Mistakes That Create Big Delays</span>
               <span class="inbox__time">Fri</span>
@@ -365,8 +396,8 @@
         </h2>
         <p class="final__body">If you are hiring for an accounting, finance, or tax role, Notably can help you find candidates with the skill, interest, and fit to move the team forward.</p>
         <div class="final__ctas">
-          <a class="btn btn--primary" href="mailto:julie@notably.com?subject=Starting%20a%20Search">Start a Search</a>
-          <a class="btn btn--secondary" href="mailto:julie@notably.com">Contact Julie</a>
+          <a class="btn btn--primary" href="contact.html">Start a Search</a>
+          <a class="btn btn--secondary" href="contact.html">Contact Julie</a>
         </div>
       </section>
 
@@ -380,10 +411,11 @@
           <div class="footer__contact">
             <nav class="footer__nav" aria-label="Footer">
               <a href="#hire">Hire Talent</a>
-              <a href="mailto:julie@notably.com?subject=Exploring%20Accounting%2C%20Finance%2C%20or%20Tax%20Opportunities">Find a Job</a>
               <a href="#julie">About Julie</a>
-              <a href="#start">Contact</a>
+              <a href="find-job.html">Find a Job</a>
+              <a href="contact.html">Contact</a>
               <a href="https://www.rimrp.com/" target="_blank" rel="noopener">RIM ↗</a>
+              <a href="https://www.linkedin.com/" target="_blank" rel="noopener">LinkedIn ↗</a>
             </nav>
             <div class="footer__where">
               <span>Denver, Colorado</span>
@@ -392,7 +424,7 @@
           </div>
         </div>
         <div class="footer__right">
-          <img class="footer__lines" src="assets/logo-footer.png" alt="" aria-hidden="true" />
+          <img class="footer__lines" src="assets/logo-footer-yellow.png" alt="" aria-hidden="true" />
         </div>
       </div>
     </footer>
