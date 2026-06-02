@@ -359,6 +359,15 @@ strong { font-weight: 500; }
   padding: 28px var(--gutter);
 }
 .nav__logo img { height: 44px; width: auto; display: block; }
+.nav__tagline {
+  margin-left: 18px;
+  margin-right: auto;
+  font-family: var(--font-serif);
+  font-size: 15px;
+  line-height: 1;
+  color: color-mix(in srgb, var(--c-off-black) 72%, transparent);
+  white-space: nowrap;
+}
 
 .nav__links {
   display: flex;
@@ -386,6 +395,15 @@ strong { font-weight: 500; }
 @media (max-width: 900px) {
   .nav__links { display: none; }
   .nav__toggle { display: inline-flex; }
+}
+@media (max-width: 640px) {
+  .nav__inner { padding: 22px 20px; }
+  .nav__logo img { height: 38px; }
+  .nav__tagline {
+    margin-left: 12px;
+    font-size: 13px;
+    white-space: normal;
+  }
 }
 
 
