@@ -461,6 +461,15 @@ strong { font-weight: 500; }
   text-align: center;
 }
 
+.hero__emphasis {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  text-decoration: underline;
+  text-decoration-thickness: 0.14em;
+  text-decoration-color: var(--c-yellow);
+  text-underline-offset: 0.16em;
+}
+
 .hero__ctas {
   display: flex;
   gap: var(--s-3);
@@ -468,6 +477,19 @@ strong { font-weight: 500; }
   justify-content: center;
   padding-top: 8px;
   flex-wrap: wrap;
+}
+
+.hero__ctas .btn {
+  font-size: 17px;
+  line-height: 20px;
+}
+
+.hero__ctas .btn--primary {
+  padding: 17px 28px;
+}
+
+.hero__ctas .btn--secondary {
+  padding: 16px 27px;
 }
 
 @media (max-width: 640px) {

@@ -81,6 +81,7 @@
         ["Email", data.get("email")],
         ["Company", data.get("company")],
         ["Role or function", data.get("role")],
+        ["Target compensation", data.get("target_compensation")],
         ["Timing", data.get("timing")],
         ["Context", data.get("context")],
       ]
@@ -90,7 +91,7 @@
       const subject = encodeURIComponent("Starting a Search");
       const body = encodeURIComponent(lines);
       if (status) status.textContent = "Opening an email draft...";
-      window.location.href = `mailto:julie@notably.com?subject=${subject}&body=${body}`;
+      window.location.href = `mailto:julie@notablyrecruit.com?subject=${subject}&body=${body}`;
     });
   }
 
