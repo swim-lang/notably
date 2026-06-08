@@ -34,9 +34,8 @@
 
   /* ─── Newsletter form ──────────────────────────────────────── */
   //
-  // No backend wired up — this just gives the user feedback and prevents
-  // the page from refreshing. Replace the success branch with a real fetch
-  // to your ESP (ConvertKit, Mailchimp, Buttondown, etc.) when ready.
+  // Static preview v1: compose a mailto draft so newsletter interest
+  // reaches Julie until a real ESP/backend is chosen.
 
   const form = document.querySelector("[data-newsletter]");
   if (form) {
@@ -53,11 +52,10 @@
         return;
       }
 
-      if (status) status.textContent = "Thanks — you're on the list.";
-      input.value = "";
-
-      // TODO: replace with real submit
-      // fetch("/api/subscribe", { method: "POST", body: JSON.stringify({ email }) })
+      const subject = encodeURIComponent("Newsletter signup");
+      const body = encodeURIComponent(`Email: ${email}`);
+      if (status) status.textContent = "Opening an email draft...";
+      window.location.href = `mailto:julie@notablyrecruit.com?subject=${subject}&body=${body}`;
     });
   }
 

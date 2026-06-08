@@ -41,7 +41,7 @@ This is a static site. Drop the folder into any of these:
 
 2. **Add Julie's portrait.** Save the image as `assets/julie.jpg` (or update the URL in `styles.css` under `.julie__photo`). Recommended size: ~1600×2000 px, JPG, under 500KB.
 
-3. **Wire up the newsletter form.** In `script.js`, replace the `TODO` comment in the `[data-newsletter]` handler with a real `fetch()` to your email provider (ConvertKit, Mailchimp, Buttondown, etc.).
+3. **Newsletter form.** The newsletter form currently opens a mailto draft to `julie@notablyrecruit.com`. Replace that handler with a real ESP/backend integration (ConvertKit, Mailchimp, Buttondown, etc.) when production newsletter tooling is chosen.
 
 4. **Update links.** The mailto links currently point to `julie@notablyrecruit.com`. If the final email changes, update those links before launch. The "About Julie" links scroll to an in-page anchor — if that becomes a separate page, replace `#julie` with the live URL.
 
