@@ -73,4 +73,15 @@ for (const expected of [
   assert.match(sql, new RegExp(expected), `Missing SQL contract: ${expected}`);
 }
 
+const newsletterSqlPath = join(root, "notably-newsletter-signups.sql");
+assert.equal(existsSync(newsletterSqlPath), true, "Missing newsletter Supabase schema file");
+const newsletterSql = readFileSync(newsletterSqlPath, "utf8");
+for (const expected of [
+  "create table if not exists public.notably_newsletter_signups",
+  "email text not null",
+  "allow anonymous notably newsletter insert",
+]) {
+  assert.ok(newsletterSql.includes(expected), `Missing newsletter schema contract: ${expected}`);
+}
+
 console.log("Revision system contract verified.");

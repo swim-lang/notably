@@ -4,6 +4,11 @@
 (function () {
   "use strict";
 
+  const SITE_CONFIG = window.NOTABLY_REVIEW_CONFIG || {};
+  const SUPABASE_URL = (SITE_CONFIG.supabaseUrl || "").replace(/\/$/, "");
+  const SUPABASE_ANON_KEY = SITE_CONFIG.supabaseAnonKey || "";
+  const NEWSLETTER_TABLE = "notably_newsletter_signups";
+
   /* ─── Mobile nav toggle ────────────────────────────────────── */
 
   const toggle = document.querySelector(".nav__toggle");
@@ -34,15 +39,15 @@
 
   /* ─── Newsletter form ──────────────────────────────────────── */
   //
-  // Static preview v1: compose a mailto draft so newsletter interest
-  // reaches Julie until a real ESP/backend is chosen.
+  // Store newsletter interest in Supabase. If the table is unavailable,
+  // fall back to a mailto draft so the lead is not lost.
 
   const form = document.querySelector("[data-newsletter]");
   if (form) {
     const input = form.querySelector("input[type=email]");
     const status = document.querySelector(".news__status");
 
-    form.addEventListener("submit", (event) => {
+    form.addEventListener("submit", async (event) => {
       event.preventDefault();
       const email = (input.value || "").trim();
 
@@ -52,10 +57,38 @@
         return;
       }
 
-      const subject = encodeURIComponent("Newsletter signup");
-      const body = encodeURIComponent(`Email: ${email}`);
-      if (status) status.textContent = "Opening an email draft...";
-      window.location.href = `mailto:julie@notablyrecruit.com?subject=${subject}&body=${body}`;
+      if (status) status.textContent = "Saving...";
+
+      try {
+        if (!SUPABASE_URL || !SUPABASE_ANON_KEY) throw new Error("Missing Supabase newsletter config.");
+
+        const response = await fetch(`${SUPABASE_URL}/rest/v1/${NEWSLETTER_TABLE}`, {
+          method: "POST",
+          headers: {
+            apikey: SUPABASE_ANON_KEY,
+            Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+            "Content-Type": "application/json",
+            Prefer: "return=minimal",
+          },
+          body: JSON.stringify({
+            email,
+            source_path: `${window.location.pathname}${window.location.hash}`,
+            user_agent: window.navigator.userAgent,
+            status: "subscribed",
+          }),
+        });
+
+        if (!response.ok) throw new Error(await response.text());
+
+        if (status) status.textContent = "Thanks — you're on the list.";
+        input.value = "";
+      } catch (error) {
+        console.warn("Could not save newsletter signup.", error);
+        const subject = encodeURIComponent("Newsletter signup");
+        const body = encodeURIComponent(`Email: ${email}`);
+        if (status) status.textContent = "Opening an email draft as backup...";
+        window.location.href = `mailto:julie@notablyrecruit.com?subject=${subject}&body=${body}`;
+      }
     });
   }
 
@@ -249,9 +282,8 @@
   const REVIEW_STORAGE_KEY = "notably-review-comments";
   const REVIEW_TABLE = "notably_review_comments";
   const REVIEW_PAGE = "home";
-  const reviewConfig = window.NOTABLY_REVIEW_CONFIG || {};
-  const REVIEW_SUPABASE_URL = (reviewConfig.supabaseUrl || "").replace(/\/$/, "");
-  const REVIEW_SUPABASE_ANON_KEY = reviewConfig.supabaseAnonKey || "";
+  const REVIEW_SUPABASE_URL = SUPABASE_URL;
+  const REVIEW_SUPABASE_ANON_KEY = SUPABASE_ANON_KEY;
   const HAS_REVIEW_SUPABASE = Boolean(REVIEW_SUPABASE_URL && REVIEW_SUPABASE_ANON_KEY);
 
   const reviewState = {

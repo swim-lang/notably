@@ -41,11 +41,11 @@ This is a static site. Drop the folder into any of these:
 
 2. **Add Julie's portrait.** Save the image as `assets/julie.jpg` (or update the URL in `styles.css` under `.julie__photo`). Recommended size: ~1600×2000 px, JPG, under 500KB.
 
-3. **Newsletter form.** The newsletter form currently opens a mailto draft to `julie@notablyrecruit.com`. Replace that handler with a real ESP/backend integration (ConvertKit, Mailchimp, Buttondown, etc.) when production newsletter tooling is chosen.
+3. **Newsletter form.** The newsletter form posts to Supabase table `notably_newsletter_signups`. Apply `notably-newsletter-signups.sql` in Supabase before relying on persistence. If the table is unavailable, the form falls back to a mailto draft so leads are not lost.
 
 4. **Update links.** The mailto links currently point to `julie@notablyrecruit.com`. If the final email changes, update those links before launch. The "About Julie" links scroll to an in-page anchor — if that becomes a separate page, replace `#julie` with the live URL.
 
-5. **Add SEO + analytics.** Update the `<title>`, `<meta name="description">`, and Open Graph tags in `<head>`. Drop in your analytics snippet (Plausible, Fathom, GA4) before `</head>`.
+5. **Add analytics.** Drop in your analytics snippet (Plausible, Fathom, GA4) before `</head>` once the production measurement tool is chosen.
 
 6. **Favicon.** Add a `favicon.ico` + apple-touch-icon to the root.
 
