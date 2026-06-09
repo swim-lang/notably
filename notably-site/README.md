@@ -43,9 +43,11 @@ This is a static site. Drop the folder into any of these:
 
 3. **Newsletter form.** The newsletter form posts to Supabase table `notably_newsletter_signups`. Apply `notably-newsletter-signups.sql` in Supabase before relying on persistence. If the table is unavailable, the form falls back to a mailto draft so leads are not lost.
 
-4. **Update links.** The mailto links currently point to `julie@notablyrecruit.com`. If the final email changes, update those links before launch. The "About Julie" links scroll to an in-page anchor — if that becomes a separate page, replace `#julie` with the live URL.
+4. **Signature builder.** The private email signature utility lives at `signature.html`. It is intentionally excluded from navigation and uses `noindex, nofollow` metadata so search engines should not list it.
 
-5. **Add analytics.** Drop in your analytics snippet (Plausible, Fathom, GA4) before `</head>` once the production measurement tool is chosen.
+5. **Update links.** The mailto links currently point to `julie@notablyrecruit.com`. If the final email changes, update those links before launch. The "About Julie" links scroll to an in-page anchor — if that becomes a separate page, replace `#julie` with the live URL.
+
+6. **Add analytics.** Drop in your analytics snippet (Plausible, Fathom, GA4) before `</head>` once the production measurement tool is chosen.
 
 6. **Favicon.** Add a `favicon.ico` + apple-touch-icon to the root.
 

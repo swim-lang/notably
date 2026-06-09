@@ -1,0 +1,464 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Notably Signature Builder</title>
+    <meta name="description" content="Private Notably email signature builder." />
+    <meta name="robots" content="noindex, nofollow, noarchive, nosnippet" />
+    <link rel="canonical" href="https://swim-lang.github.io/notably/signature.html" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Newsreader:ital,wght@0,400;1,400&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --ink: #272826;
+        --paper: #fbfaf5;
+        --panel: #ffffff;
+        --line: rgba(39, 40, 38, 0.14);
+        --muted: rgba(39, 40, 38, 0.62);
+        --yellow: #f8f2a8;
+        --sans: "DM Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        --serif: "Newsreader", Georgia, "Times New Roman", serif;
+      }
+
+      * { box-sizing: border-box; }
+      html { -webkit-text-size-adjust: 100%; }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        color: var(--ink);
+        background: var(--paper);
+        font-family: var(--sans);
+        line-height: 1.5;
+      }
+
+      button,
+      input {
+        font: inherit;
+      }
+
+      .page {
+        width: min(1180px, calc(100% - 40px));
+        margin: 0 auto;
+        padding: 40px 0 56px;
+      }
+
+      .topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        margin-bottom: 36px;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+
+      .brand img {
+        width: 42px;
+        height: 42px;
+        border-radius: 9px;
+      }
+
+      .brand strong {
+        display: block;
+        font-size: 15px;
+        line-height: 1;
+      }
+
+      .brand span {
+        display: block;
+        margin-top: 4px;
+        color: var(--muted);
+        font-family: var(--serif);
+        font-size: 15px;
+        font-style: italic;
+      }
+
+      .home-link {
+        color: var(--ink);
+        font-size: 14px;
+        text-decoration: none;
+        border-bottom: 1px solid currentColor;
+      }
+
+      .intro {
+        max-width: 760px;
+        margin-bottom: 28px;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: clamp(40px, 7vw, 84px);
+        line-height: 0.95;
+        letter-spacing: 0;
+      }
+
+      .intro p {
+        max-width: 630px;
+        margin: 16px 0 0;
+        color: var(--muted);
+        font-family: var(--serif);
+        font-size: 21px;
+        line-height: 1.35;
+      }
+
+      .workspace {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 360px;
+        gap: 28px;
+        align-items: start;
+      }
+
+      .panel {
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+      }
+
+      .preview-panel {
+        padding: clamp(22px, 4vw, 42px);
+      }
+
+      .preview-shell {
+        overflow-x: auto;
+        padding: 28px;
+        background: #fff;
+        border: 1px solid rgba(39, 40, 38, 0.08);
+        border-radius: 8px;
+      }
+
+      .signature-preview {
+        width: fit-content;
+        min-width: 640px;
+        padding: 6px;
+        outline: none;
+      }
+
+      .signature-preview:focus {
+        box-shadow: 0 0 0 2px var(--yellow);
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 20px;
+      }
+
+      .button {
+        min-height: 42px;
+        padding: 11px 16px;
+        border: 1px solid var(--ink);
+        border-radius: 8px;
+        background: transparent;
+        color: var(--ink);
+      }
+
+      .button--primary {
+        background: var(--yellow);
+      }
+
+      .status {
+        min-height: 22px;
+        margin: 14px 0 0;
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      .form-panel {
+        padding: 22px;
+      }
+
+      .form-panel h2 {
+        margin: 0 0 18px;
+        font-size: 16px;
+        line-height: 1.2;
+      }
+
+      .field {
+        display: grid;
+        gap: 7px;
+        margin-bottom: 14px;
+      }
+
+      .field label,
+      .checks legend {
+        color: var(--muted);
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .field input {
+        width: 100%;
+        min-height: 42px;
+        padding: 9px 11px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #fffef9;
+        color: var(--ink);
+      }
+
+      .field input:focus {
+        border-color: var(--ink);
+        outline: 2px solid var(--yellow);
+        outline-offset: 1px;
+      }
+
+      .checks {
+        margin: 20px 0 0;
+        padding: 0;
+        border: 0;
+      }
+
+      .check {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        margin-top: 10px;
+        color: var(--ink);
+        font-size: 14px;
+      }
+
+      .check input {
+        width: 18px;
+        height: 18px;
+        accent-color: var(--ink);
+      }
+
+      .html-output {
+        position: absolute;
+        left: -9999px;
+        width: 1px;
+        height: 1px;
+        opacity: 0;
+      }
+
+      @media (max-width: 860px) {
+        .workspace { grid-template-columns: 1fr; }
+        .form-panel { order: -1; }
+      }
+
+      @media (max-width: 560px) {
+        .page {
+          width: min(100% - 28px, 1180px);
+          padding-top: 24px;
+        }
+
+        .topbar {
+          align-items: flex-start;
+          flex-direction: column;
+        }
+
+        .preview-shell { padding: 14px; }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <header class="topbar">
+        <a class="brand" href="index.html" aria-label="Notably home">
+          <img src="assets/signature-logo-yellow.png" alt="" />
+          <span>
+            <strong>Notably</strong>
+            <span>Talent worth your attention</span>
+          </span>
+        </a>
+        <a class="home-link" href="index.html">Back to site</a>
+      </header>
+
+      <section class="intro" aria-labelledby="signature-title">
+        <h1 id="signature-title">Signature Builder</h1>
+        <p>Update the fields, copy the finished signature, then paste it into Google Workspace Gmail settings.</p>
+      </section>
+
+      <div class="workspace">
+        <section class="panel preview-panel" aria-label="Signature preview">
+          <div class="preview-shell">
+            <div id="signature-preview" class="signature-preview" tabindex="0" aria-label="Generated email signature"></div>
+          </div>
+          <div class="actions">
+            <button class="button button--primary" type="button" data-action="copy-rich">Copy Signature</button>
+            <button class="button" type="button" data-action="select">Select Signature</button>
+            <button class="button" type="button" data-action="copy-html">Copy HTML</button>
+          </div>
+          <p class="status" id="status" role="status" aria-live="polite"></p>
+          <textarea class="html-output" id="html-output" aria-hidden="true" tabindex="-1"></textarea>
+        </section>
+
+        <aside class="panel form-panel" aria-label="Signature settings">
+          <h2>Details</h2>
+          <form id="signature-form">
+            <div class="field">
+              <label for="field-name">Name</label>
+              <input id="field-name" name="name" value="Julie Anich" autocomplete="name" />
+            </div>
+            <div class="field">
+              <label for="field-credential">Credential</label>
+              <input id="field-credential" name="credential" value="CPA" />
+            </div>
+            <div class="field">
+              <label for="field-title">Title</label>
+              <input id="field-title" name="title" value="Founding Member, Recruitment Services" />
+            </div>
+            <div class="field">
+              <label for="field-phone">Phone</label>
+              <input id="field-phone" name="phone" value="303.551.3511" autocomplete="tel" />
+            </div>
+            <div class="field">
+              <label for="field-email">Email</label>
+              <input id="field-email" name="email" value="julie@notablyrecruit.com" autocomplete="email" />
+            </div>
+            <div class="field">
+              <label for="field-website">Website</label>
+              <input id="field-website" name="website" value="notablyrecruit.com" autocomplete="url" />
+            </div>
+            <div class="field">
+              <label for="field-partnership">Partnership line</label>
+              <input id="field-partnership" name="partnership" value="In partnership with RIM Recruitment Professionals" />
+            </div>
+
+            <fieldset class="checks">
+              <legend>Show</legend>
+              <label class="check"><input type="checkbox" name="showCredential" checked /> Credential</label>
+              <label class="check"><input type="checkbox" name="showTagline" checked /> Notably tagline</label>
+              <label class="check"><input type="checkbox" name="showPhone" checked /> Phone</label>
+              <label class="check"><input type="checkbox" name="showEmail" checked /> Email</label>
+              <label class="check"><input type="checkbox" name="showWebsite" checked /> Website</label>
+              <label class="check"><input type="checkbox" name="showPartnership" checked /> Partnership line</label>
+            </fieldset>
+          </form>
+        </aside>
+      </div>
+    </main>
+
+    <script>
+      (() => {
+        const LIVE_BASE = "https://swim-lang.github.io/notably/";
+        const LOGO_URL = `${LIVE_BASE}assets/signature-logo-yellow.png`;
+        const preview = document.querySelector("#signature-preview");
+        const output = document.querySelector("#html-output");
+        const form = document.querySelector("#signature-form");
+        const status = document.querySelector("#status");
+
+        const escapeHtml = (value) => String(value || "")
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;");
+
+        const cleanUrl = (value) => {
+          const text = String(value || "").trim().replace(/^https?:\/\//i, "").replace(/\/+$/, "");
+          return text;
+        };
+
+        const renderSignature = () => {
+          const data = new FormData(form);
+          const name = escapeHtml(data.get("name"));
+          const credential = escapeHtml(data.get("credential"));
+          const displayName = data.get("showCredential") && credential ? `${name}, ${credential}` : name;
+          const title = escapeHtml(data.get("title"));
+          const phone = escapeHtml(data.get("phone"));
+          const email = escapeHtml(String(data.get("email") || "").trim());
+          const website = escapeHtml(cleanUrl(data.get("website")));
+          const websiteHref = website ? `https://${website}` : "";
+          const partnership = escapeHtml(data.get("partnership"));
+
+          const phoneRow = data.get("showPhone") && phone
+            ? `<tr><td style="padding:0 0 7px 0;font-family:Arial,Helvetica,sans-serif;font-size:21px;line-height:25px;color:#272826;">${phone}</td></tr>`
+            : "";
+          const emailRow = data.get("showEmail") && email
+            ? `<tr><td style="padding:0 0 7px 0;font-family:Arial,Helvetica,sans-serif;font-size:21px;line-height:25px;color:#272826;"><a href="mailto:${email}" style="color:#272826;text-decoration:none;">${email}</a></td></tr>`
+            : "";
+          const websiteRow = data.get("showWebsite") && website
+            ? `<tr><td style="padding:0 0 0 0;font-family:Arial,Helvetica,sans-serif;font-size:21px;line-height:25px;color:#272826;"><a href="${websiteHref}" style="color:#272826;text-decoration:none;">${website}</a></td></tr>`
+            : "";
+          const tagline = data.get("showTagline")
+            ? `<span style="color:#8a8a8a;">&nbsp;&nbsp;&middot;&nbsp;&nbsp;</span><span style="font-family:Georgia,'Times New Roman',serif;font-size:20px;line-height:24px;color:#777777;font-style:italic;">Talent worth your attention</span>`
+            : "";
+          const partnershipRow = data.get("showPartnership") && partnership
+            ? `<tr><td style="padding:18px 0 0 0;"><div style="height:1px;line-height:1px;background:#e8e5df;font-size:1px;">&nbsp;</div><div style="padding:14px 0 0 0;font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:20px;letter-spacing:3px;text-transform:uppercase;color:#9a9a9a;">${partnership}</div></td></tr>`
+            : "";
+
+          const html = `<table role="presentation" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;font-family:Arial,Helvetica,sans-serif;color:#272826;"><tr><td style="width:154px;padding:0 28px 0 0;vertical-align:top;"><img src="${LOGO_URL}" width="104" height="105" alt="Notably" style="display:block;width:104px;height:105px;border:0;border-radius:13px;" /></td><td style="width:1px;background:#e0ddd7;font-size:1px;line-height:1px;">&nbsp;</td><td style="padding:0 0 0 34px;vertical-align:top;"><table role="presentation" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;"><tr><td style="padding:0 0 8px 0;font-family:Arial,Helvetica,sans-serif;font-size:30px;line-height:35px;font-weight:700;color:#272826;">${displayName}</td></tr><tr><td style="padding:0 0 24px 0;font-family:Arial,Helvetica,sans-serif;font-size:22px;line-height:28px;color:#777777;">${title}</td></tr><tr><td style="padding:0 0 27px 0;font-family:Arial,Helvetica,sans-serif;font-size:22px;line-height:27px;color:#272826;"><strong style="font-weight:700;">Notably</strong>${tagline}</td></tr>${phoneRow}${emailRow}${websiteRow}${partnershipRow}</table></td></tr></table>`;
+
+          preview.innerHTML = html;
+          output.value = html;
+        };
+
+        const selectPreview = () => {
+          const range = document.createRange();
+          range.selectNodeContents(preview);
+          const selection = window.getSelection();
+          selection.removeAllRanges();
+          selection.addRange(range);
+          preview.focus();
+        };
+
+        const copyText = async (text) => {
+          if (navigator.clipboard?.writeText) {
+            await navigator.clipboard.writeText(text);
+            return true;
+          }
+          output.value = text;
+          output.focus();
+          output.select();
+          return document.execCommand("copy");
+        };
+
+        const copyRich = async () => {
+          const html = output.value;
+          const plain = preview.innerText.trim();
+          if (navigator.clipboard?.write && window.ClipboardItem) {
+            await navigator.clipboard.write([
+              new ClipboardItem({
+                "text/html": new Blob([html], { type: "text/html" }),
+                "text/plain": new Blob([plain], { type: "text/plain" }),
+              }),
+            ]);
+            return true;
+          }
+          selectPreview();
+          return document.execCommand("copy");
+        };
+
+        form.addEventListener("input", () => {
+          renderSignature();
+          status.textContent = "";
+        });
+
+        document.addEventListener("click", async (event) => {
+          const button = event.target.closest("[data-action]");
+          if (!button) return;
+
+          try {
+            if (button.dataset.action === "select") {
+              selectPreview();
+              status.textContent = "Signature selected. Copy it, then paste into Gmail settings.";
+            }
+            if (button.dataset.action === "copy-html") {
+              await copyText(output.value);
+              status.textContent = "HTML copied.";
+            }
+            if (button.dataset.action === "copy-rich") {
+              await copyRich();
+              status.textContent = "Signature copied. Paste it into Gmail settings.";
+            }
+          } catch (error) {
+            console.warn("Signature copy failed.", error);
+            selectPreview();
+            status.textContent = "Copy was blocked by the browser, so the signature is selected for manual copy.";
+          }
+        });
+
+        renderSignature();
+      })();
+    </script>
+  </body>
+</html>

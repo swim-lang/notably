@@ -9,6 +9,8 @@ const read = (path) => readFileSync(join(root, path), "utf8");
 const html = read("index.html");
 const script = read("script.js");
 const styles = read("styles.css");
+const signature = read("signature.html");
+const robots = read("robots.txt");
 
 const expectedReviewIds = [
   "nav",
@@ -83,5 +85,21 @@ for (const expected of [
 ]) {
   assert.ok(newsletterSql.includes(expected), `Missing newsletter schema contract: ${expected}`);
 }
+
+for (const expected of [
+  '<meta name="robots" content="noindex, nofollow, noarchive, nosnippet" />',
+  "signature-logo-yellow.png",
+  "Copy Signature",
+  "Select Signature",
+  "Copy HTML",
+  "julie@notablyrecruit.com",
+  "notablyrecruit.com",
+  "Talent worth your attention",
+  "ClipboardItem",
+]) {
+  assert.ok(signature.includes(expected), `Missing signature builder contract: ${expected}`);
+}
+
+assert.ok(robots.includes("Disallow: /notably/signature.html"), "Missing signature robots block");
 
 console.log("Revision system contract verified.");
