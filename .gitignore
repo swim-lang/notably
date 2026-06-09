@@ -9,3 +9,4 @@ Subtext Pitch.pdf
 
 # Root-level font duplicates — the live copies live in notably-site/assets/fonts/
 /*.otf
+.vercel

@@ -11,6 +11,7 @@ const script = read("script.js");
 const styles = read("styles.css");
 const signature = read("signature.html");
 const robots = read("robots.txt");
+const vercelConfig = read("../vercel.json");
 
 const expectedReviewIds = [
   "nav",
@@ -100,6 +101,30 @@ for (const expected of [
   assert.ok(signature.includes(expected), `Missing signature builder contract: ${expected}`);
 }
 
+for (const expected of [
+  "https://notablyrecruit.com/signature.html",
+  'const LIVE_BASE = "https://notablyrecruit.com/";',
+]) {
+  assert.ok(signature.includes(expected), `Missing production signature domain: ${expected}`);
+}
+
+for (const expected of [
+  "https://notablyrecruit.com/",
+  "https://notablyrecruit.com/assets/logo-nav-yellow.png",
+]) {
+  assert.ok(html.includes(expected), `Missing production home metadata: ${expected}`);
+}
+
 assert.ok(robots.includes("Disallow: /notably/signature.html"), "Missing signature robots block");
+assert.ok(robots.includes("Disallow: /signature.html"), "Missing root-domain signature robots block");
+
+for (const expected of [
+  '"outputDirectory": "notably-site"',
+  '"buildCommand": null',
+  '"source": "/signature"',
+  '"X-Robots-Tag"',
+]) {
+  assert.ok(vercelConfig.includes(expected), `Missing Vercel config contract: ${expected}`);
+}
 
 console.log("Revision system contract verified.");

@@ -31,9 +31,17 @@ Or just double-click `index.html` to open it in a browser — the only thing tha
 This is a static site. Drop the folder into any of these:
 
 - **Netlify** — drag the `notably-site/` folder onto netlify.com/drop
-- **Vercel** — `vercel deploy` inside the folder
+- **Vercel** — current launch target is `anchovies/notably`
 - **GitHub Pages** — push and enable Pages
 - **Cloudflare Pages, S3, etc.** — same drill
+
+Current launch setup:
+
+- Production fallback URL: `https://notably-rust.vercel.app`
+- Intended domain: `https://notablyrecruit.com`
+- Registrar DNS still needs to point at Vercel:
+  - `A notablyrecruit.com 76.76.21.21`
+  - `A www.notablyrecruit.com 76.76.21.21`
 
 ## Before going live
 
@@ -41,7 +49,7 @@ This is a static site. Drop the folder into any of these:
 
 2. **Add Julie's portrait.** Save the image as `assets/julie.jpg` (or update the URL in `styles.css` under `.julie__photo`). Recommended size: ~1600×2000 px, JPG, under 500KB.
 
-3. **Newsletter form.** The newsletter form posts to Supabase table `notably_newsletter_signups`. Apply `notably-newsletter-signups.sql` in Supabase before relying on persistence. If the table is unavailable, the form falls back to a mailto draft so leads are not lost.
+3. **Newsletter form.** The newsletter form does not require a database by default. If no Supabase config is present, it opens a mailto draft so leads are not lost. Supabase persistence is available through `notably-newsletter-signups.sql` if the site needs it later.
 
 4. **Signature builder.** The private email signature utility lives at `signature.html`. It is intentionally excluded from navigation and uses `noindex, nofollow` metadata so search engines should not list it.
 
@@ -49,7 +57,7 @@ This is a static site. Drop the folder into any of these:
 
 6. **Add analytics.** Drop in your analytics snippet (Plausible, Fathom, GA4) before `</head>` once the production measurement tool is chosen.
 
-6. **Favicon.** Add a `favicon.ico` + apple-touch-icon to the root.
+7. **Favicon.** Add a `favicon.ico` + apple-touch-icon to the root.
 
 ## Design tokens
 

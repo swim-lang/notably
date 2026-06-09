@@ -1,2 +1,4 @@
 User-agent: *
+Disallow: /signature
+Disallow: /signature.html
 Disallow: /notably/signature.html
