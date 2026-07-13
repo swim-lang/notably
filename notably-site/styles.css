@@ -1745,6 +1745,7 @@ strong { font-weight: 500; }
 .julie__profile-copy {
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
   gap: 4px;
 }
 .julie__name {
@@ -1758,6 +1759,18 @@ strong { font-weight: 500; }
   font-size: 15px;
   line-height: 1.25;
   color: rgba(39, 40, 38, 0.68);
+}
+.julie__linkedin {
+  margin-top: 5px;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  line-height: 18px;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+.julie__linkedin:hover {
+  opacity: 0.62;
 }
 .julie__headline {
   font-family: var(--font-sans);
@@ -1948,8 +1961,15 @@ strong { font-weight: 500; }
   object-fit: cover;
   display: block;
 }
+.inbox__avatar--brand {
+  border-radius: 8px;
+  background: var(--c-yellow);
+}
+.inbox__avatar--brand img {
+  object-fit: contain;
+}
 .inbox__sender {
-  flex: 0 0 96px;
+  flex: 0 0 112px;
   font-family: var(--font-sans);
   font-size: 14px;
   line-height: 18px;

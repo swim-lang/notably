@@ -124,8 +124,12 @@ for (const expected of [
   "assets/julie-intro.mp4",
   "assets/julie-video-poster.jpg",
   "data-video-toggle",
+  "data-video-jump",
   "julie__portrait",
   "Founder, Recruitment Services",
+  "LinkedIn ↗",
+  "A Short Note",
+  "inbox__avatar--brand",
   'action="/api/forms"',
   'name="form_type" value="newsletter"',
 ]) {

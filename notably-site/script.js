@@ -260,6 +260,20 @@
     setVideoState();
   });
 
+  document.querySelectorAll("[data-video-jump]").forEach((trigger) => {
+    trigger.addEventListener("click", () => {
+      const media = document.querySelector(".julie__media");
+      const video = media?.querySelector(".julie__video");
+      if (!media || !video) return;
+
+      media.scrollIntoView({
+        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+        block: "center",
+      });
+      video.play().catch(() => media.querySelector("[data-video-toggle]")?.focus());
+    });
+  });
+
   /* ─── Scroll-triggered reveals ─────────────────────────────── */
   //
   // Three patterns, two observers:
