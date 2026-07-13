@@ -1,4 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Notably">
-  <rect width="64" height="64" rx="8" fill="#f8f2a8"/>
-  <path fill="#272826" d="M8 13h42v5H8zm19 5h29v5H27zM8 24h47v5H8zm14 5h34v5H22zM8 35h48v5H8zm17 5h31v5H25zM8 46h48v5H8z"/>
+  <rect width="64" height="64" rx="12" fill="#f8f2a8"/>
+  <g fill="#272826">
+    <path d="M12 18h29v4H12z"/>
+    <path d="M28 22h24v4H28z"/>
+    <path d="M12 28h40v4H12z"/>
+    <path d="M25 32h27v4H25z"/>
+    <path d="M12 38h40v4H12z"/>
+    <path d="M28 42h24v4H28z"/>
+    <path d="M12 48h40v4H12z"/>
+  </g>
 </svg>
