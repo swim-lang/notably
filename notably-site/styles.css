@@ -2506,6 +2506,22 @@ strong { font-weight: 500; }
 #search-form {
   scroll-margin-top: 110px;
 }
+#search-name {
+  transition: box-shadow 180ms ease;
+}
+.contact-form.is-attention #search-name {
+  animation: search-field-attention 1.35s ease;
+}
+@keyframes search-field-attention {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(39, 40, 38, 0); }
+  28%, 72% { box-shadow: 0 0 0 6px rgba(39, 40, 38, 0.18); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .contact-form.is-attention #search-name {
+    animation: none;
+    box-shadow: 0 0 0 4px rgba(39, 40, 38, 0.18);
+  }
+}
 .contact-form__row {
   display: flex;
   flex-direction: column;

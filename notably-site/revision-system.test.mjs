@@ -48,6 +48,9 @@ for (const expected of [
   "Preview Website",
   "julie__media",
   "data-video-toggle",
+  "focusSearchForm",
+  "is-attention",
+  ".review-mode-choice button",
 ]) {
   assert.match(script, new RegExp(expected), `Missing review script contract: ${expected}`);
 }
@@ -61,6 +64,8 @@ for (const expected of [
   ".has-review-comment",
   ".julie__play",
   ".julie__media.is-playing",
+  ".contact-form.is-attention #search-name",
+  "search-field-attention",
 ]) {
   assert.ok(styles.includes(expected), `Missing review style: ${expected}`);
 }

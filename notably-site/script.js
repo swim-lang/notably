@@ -140,6 +140,45 @@
   const searchForm = document.querySelector("[data-search-form]");
   if (searchForm) {
     const status = searchForm.querySelector(".contact-form__status");
+    const firstField = searchForm.querySelector("#search-name");
+    let attentionTimer;
+
+    const focusSearchForm = () => {
+      const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      (firstField || searchForm).scrollIntoView({
+        behavior: reduceMotion ? "auto" : "smooth",
+        block: "center",
+      });
+
+      searchForm.classList.remove("is-attention");
+      void searchForm.offsetWidth;
+      searchForm.classList.add("is-attention");
+
+      window.setTimeout(() => firstField?.focus({ preventScroll: true }), reduceMotion ? 0 : 350);
+      window.clearTimeout(attentionTimer);
+      attentionTimer = window.setTimeout(() => searchForm.classList.remove("is-attention"), 1500);
+    };
+
+    document.querySelectorAll('a[href="#search-form"]').forEach((link) => {
+      link.addEventListener("click", (event) => {
+        event.preventDefault();
+        window.history.replaceState(null, "", "#search-form");
+        focusSearchForm();
+      });
+    });
+
+    if (window.location.hash === "#search-form") {
+      window.setTimeout(focusSearchForm, 120);
+    }
+
+    document.addEventListener("click", (event) => {
+      if (
+        window.location.hash === "#search-form" &&
+        event.target.closest(".review-mode-choice button")
+      ) {
+        window.setTimeout(focusSearchForm, 80);
+      }
+    });
 
     searchForm.addEventListener("submit", async (event) => {
       event.preventDefault();
