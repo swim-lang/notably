@@ -1609,7 +1609,7 @@ strong { font-weight: 500; }
   font-size: 18px;
   line-height: 1.4;
 }
-.julie__ctas { display: flex; gap: var(--s-3); padding-top: 8px; }
+.julie__ctas { display: flex; gap: var(--s-3); padding-top: 8px; flex-wrap: wrap; }
 
 @media (max-width: 1024px) {
   .julie { flex-direction: column; padding: var(--s-10) 40px; }
@@ -2197,6 +2197,12 @@ strong { font-weight: 500; }
   font-size: 24px;
   line-height: 1.36;
 }
+.contact-hero__ctas {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  flex-wrap: wrap;
+}
 .contact-card {
   flex: 0 0 480px;
   display: flex;
@@ -2357,6 +2363,10 @@ strong { font-weight: 500; }
   .contact-note p {
     font-size: 19px;
     line-height: 1.42;
+  }
+  .contact-hero__ctas {
+    align-items: flex-start;
+    flex-direction: column;
   }
   .contact-card,
   .contact-prompt,

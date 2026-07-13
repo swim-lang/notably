@@ -111,9 +111,17 @@ for (const expected of [
 for (const expected of [
   "https://notablyrecruit.com/",
   "https://notablyrecruit.com/assets/logo-nav-yellow.png",
+  "https://calendly.com/janich-rimrp/search-conversation",
+  "assets/julie.jpg",
 ]) {
   assert.ok(html.includes(expected), `Missing production home metadata: ${expected}`);
 }
+
+const candidate = read("find-job.html");
+assert.ok(
+  candidate.includes("https://calendly.com/janich-rimrp/introductory-conversation"),
+  "Missing candidate Calendly link",
+);
 
 assert.ok(robots.includes("Disallow: /notably/signature.html"), "Missing signature robots block");
 assert.ok(robots.includes("Disallow: /signature.html"), "Missing root-domain signature robots block");
