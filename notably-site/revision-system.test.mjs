@@ -113,6 +113,8 @@ for (const expected of [
   "https://notablyrecruit.com/assets/logo-nav-yellow.png",
   "https://calendly.com/janich-rimrp/search-conversation",
   "assets/julie.jpg",
+  "assets/julie-intro.mp4",
+  "assets/julie-video-poster.jpg",
 ]) {
   assert.ok(html.includes(expected), `Missing production home metadata: ${expected}`);
 }
