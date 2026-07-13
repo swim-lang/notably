@@ -1587,6 +1587,7 @@ strong { font-weight: 500; }
   background-color: var(--c-off-black);
   border-radius: var(--r-photo);
   overflow: hidden;
+  position: relative;
   box-shadow: 12px 14px 0 0 rgba(39, 40, 38, 0.08);
 }
 .julie__video {
@@ -1594,6 +1595,83 @@ strong { font-weight: 500; }
   height: 100%;
   display: block;
   object-fit: cover;
+  cursor: pointer;
+}
+.julie__play {
+  position: absolute;
+  left: 22px;
+  bottom: 22px;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 48px;
+  padding: 8px 16px 8px 9px;
+  border: 1px solid rgba(39, 40, 38, 0.12);
+  border-radius: 999px;
+  background: rgba(255, 251, 234, 0.92);
+  color: var(--c-off-black);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1;
+  box-shadow: 0 14px 34px rgba(39, 40, 38, 0.18);
+  cursor: pointer;
+  opacity: 0.96;
+  transform: translateY(0);
+  transition: opacity 180ms ease, transform 180ms ease, background 180ms ease;
+}
+.julie__play:hover,
+.julie__play:focus-visible {
+  background: var(--c-yellow);
+  opacity: 1;
+  transform: translateY(-2px);
+}
+.julie__play:focus-visible {
+  outline: 2px solid var(--c-off-black);
+  outline-offset: 3px;
+}
+.julie__play-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  background: var(--c-off-black);
+  position: relative;
+  flex: 0 0 32px;
+}
+.julie__play-icon::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-top: 7px solid transparent;
+  border-bottom: 7px solid transparent;
+  border-left: 10px solid var(--c-yellow);
+  transform: translate(-38%, -50%);
+}
+.julie__media.is-playing .julie__play {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(8px);
+}
+.julie__media.is-playing:hover .julie__play,
+.julie__media.is-playing .julie__play:focus-visible {
+  opacity: 0.96;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+.julie__media.is-playing .julie__play-icon::before {
+  width: 12px;
+  height: 14px;
+  border: 0;
+  background: linear-gradient(
+    90deg,
+    var(--c-yellow) 0 4px,
+    transparent 4px 8px,
+    var(--c-yellow) 8px 12px
+  );
+  transform: translate(-50%, -50%);
 }
 .julie__body {
   flex: 0.95;
@@ -1654,6 +1732,18 @@ strong { font-weight: 500; }
 @media (max-width: 640px) {
   .julie { padding: var(--s-8) 20px; }
   .julie__media { aspect-ratio: 16 / 11; }
+  .julie__play {
+    left: 14px;
+    bottom: 14px;
+    min-height: 44px;
+    padding: 7px 13px 7px 8px;
+    font-size: 14px;
+  }
+  .julie__play-icon {
+    width: 28px;
+    height: 28px;
+    flex-basis: 28px;
+  }
   .julie__profile { align-items: flex-start; }
   .julie__avatar {
     width: 76px;

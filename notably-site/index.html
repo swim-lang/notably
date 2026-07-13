@@ -363,9 +363,13 @@
       <!-- ─────────────────────────  MEET JULIE  ───────────────────────── -->
       <section class="julie" id="julie" data-review-id="julie">
         <div class="julie__media">
-          <video class="julie__video" controls preload="metadata" playsinline poster="assets/julie-video-poster.jpg" aria-label="Julie Anich introduction video">
+          <video class="julie__video" preload="metadata" playsinline poster="assets/julie-video-poster.jpg" aria-label="Julie Anich introduction video">
             <source src="assets/julie-intro.mp4" type="video/mp4" />
           </video>
+          <button class="julie__play" type="button" aria-label="Play Julie Anich introduction video" aria-pressed="false" data-video-toggle>
+            <span class="julie__play-icon" aria-hidden="true"></span>
+            <span class="julie__play-text">Play video</span>
+          </button>
         </div>
         <div class="julie__body">
           <div class="julie__profile">

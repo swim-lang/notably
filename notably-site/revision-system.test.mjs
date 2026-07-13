@@ -45,6 +45,8 @@ for (const expected of [
   "renderReviewPanel",
   "Leave Revisions",
   "Preview Website",
+  "julie__media",
+  "data-video-toggle",
 ]) {
   assert.match(script, new RegExp(expected), `Missing review script contract: ${expected}`);
 }
@@ -56,6 +58,8 @@ for (const expected of [
   ".review-panel",
   "html[data-review-mode=\"comment\"] [data-review-id]",
   ".has-review-comment",
+  ".julie__play",
+  ".julie__media.is-playing",
 ]) {
   assert.ok(styles.includes(expected), `Missing review style: ${expected}`);
 }
@@ -115,9 +119,12 @@ for (const expected of [
   "assets/julie.jpg",
   "assets/julie-intro.mp4",
   "assets/julie-video-poster.jpg",
+  "data-video-toggle",
 ]) {
   assert.ok(html.includes(expected), `Missing production home metadata: ${expected}`);
 }
+
+assert.ok(!html.includes("julie__video\" controls"), "Julie video should use custom controls");
 
 const candidate = read("find-job.html");
 assert.ok(

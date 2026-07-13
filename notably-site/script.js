@@ -126,6 +126,44 @@
     });
   }
 
+  /* ─── Julie intro video ───────────────────────────────────── */
+
+  document.querySelectorAll(".julie__media").forEach((media) => {
+    const video = media.querySelector(".julie__video");
+    const button = media.querySelector("[data-video-toggle]");
+    const label = button?.querySelector(".julie__play-text");
+    if (!video || !button) return;
+
+    const setVideoState = () => {
+      const isPlaying = !video.paused && !video.ended;
+      media.classList.toggle("is-playing", isPlaying);
+      button.setAttribute("aria-pressed", isPlaying ? "true" : "false");
+      button.setAttribute(
+        "aria-label",
+        `${isPlaying ? "Pause" : "Play"} Julie Anich introduction video`
+      );
+      if (label) label.textContent = isPlaying ? "Pause" : "Play video";
+    };
+
+    const toggleVideo = () => {
+      if (video.paused || video.ended) {
+        video.play().catch(() => setVideoState());
+      } else {
+        video.pause();
+      }
+    };
+
+    button.addEventListener("click", (event) => {
+      event.stopPropagation();
+      toggleVideo();
+    });
+    video.addEventListener("click", toggleVideo);
+    video.addEventListener("play", setVideoState);
+    video.addEventListener("pause", setVideoState);
+    video.addEventListener("ended", setVideoState);
+    setVideoState();
+  });
+
   /* ─── Scroll-triggered reveals ─────────────────────────────── */
   //
   // Three patterns, two observers:
