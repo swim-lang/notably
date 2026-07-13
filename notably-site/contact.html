@@ -9,6 +9,9 @@
     <meta name="author" content="Notably" />
     <meta name="keywords" content="start a search, accounting recruiting, finance recruiting, tax recruiting, hiring accounting talent, hiring tax talent" />
     <link rel="canonical" href="https://notablyrecruit.com/contact.html" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon-32x32.png" sizes="32x32" type="image/png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <meta property="og:title" content="Start a Search — Notably" />
     <meta property="og:description" content="Tell Notably about the accounting, finance, or tax hire you need to make." />
     <meta property="og:type" content="website" />
@@ -66,7 +69,9 @@
 
           <aside class="contact-card" aria-label="Start a search form">
             <h2>Start with the basics.</h2>
-            <form class="contact-form" action="mailto:julie@notablyrecruit.com" method="post" enctype="text/plain" data-search-form>
+            <form class="contact-form" action="/api/forms" method="post" data-search-form>
+              <input type="hidden" name="form_type" value="search" />
+              <input type="text" name="website" tabindex="-1" autocomplete="off" hidden aria-hidden="true" />
               <div class="contact-form__row">
                 <label for="search-name">Name</label>
                 <input id="search-name" name="name" type="text" autocomplete="name" required />

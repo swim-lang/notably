@@ -12,6 +12,7 @@ const styles = read("styles.css");
 const signature = read("signature.html");
 const robots = read("robots.txt");
 const vercelConfig = read("../vercel.json");
+const formsApi = read("../api/forms.js");
 
 const expectedReviewIds = [
   "nav",
@@ -116,21 +117,57 @@ for (const expected of [
   "https://notablyrecruit.com/",
   "https://notablyrecruit.com/assets/logo-nav-yellow.png",
   "https://calendly.com/janich-rimrp/search-conversation",
+  "/favicon.svg",
+  "/favicon-32x32.png",
+  "/apple-touch-icon.png",
   "assets/julie.jpg",
   "assets/julie-intro.mp4",
   "assets/julie-video-poster.jpg",
   "data-video-toggle",
+  'action="/api/forms"',
+  'name="form_type" value="newsletter"',
 ]) {
   assert.ok(html.includes(expected), `Missing production home metadata: ${expected}`);
 }
 
 assert.ok(!html.includes("julie__video\" controls"), "Julie video should use custom controls");
 
+for (const path of [
+  "favicon.svg",
+  "favicon-16x16.png",
+  "favicon-32x32.png",
+  "apple-touch-icon.png",
+  "icon-192.png",
+]) {
+  assert.equal(existsSync(join(root, path)), true, `Missing favicon asset: ${path}`);
+}
+
+for (const expected of [
+  "RESEND_API_KEY",
+  "https://api.resend.com/emails",
+  "NOTABLY_FORM_TO",
+  "NOTABLY_FORM_FROM",
+  "resend_not_configured",
+]) {
+  assert.ok(formsApi.includes(expected), `Missing Resend forms contract: ${expected}`);
+}
+
 const candidate = read("find-job.html");
 assert.ok(
   candidate.includes("https://calendly.com/janich-rimrp/introductory-conversation"),
   "Missing candidate Calendly link",
 );
+assert.ok(candidate.includes("/favicon.svg"), "Missing candidate favicon");
+
+const contact = read("contact.html");
+for (const expected of [
+  "/favicon.svg",
+  'action="/api/forms"',
+  'name="form_type" value="search"',
+  'name="website"',
+]) {
+  assert.ok(contact.includes(expected), `Missing contact form contract: ${expected}`);
+}
 
 assert.ok(robots.includes("Disallow: /notably/signature.html"), "Missing signature robots block");
 assert.ok(robots.includes("Disallow: /signature.html"), "Missing root-domain signature robots block");

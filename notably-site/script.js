@@ -7,7 +7,7 @@
   const SITE_CONFIG = window.NOTABLY_REVIEW_CONFIG || {};
   const SUPABASE_URL = (SITE_CONFIG.supabaseUrl || "").replace(/\/$/, "");
   const SUPABASE_ANON_KEY = SITE_CONFIG.supabaseAnonKey || "";
-  const NEWSLETTER_TABLE = "notably_newsletter_signups";
+  const FORMS_ENDPOINT = "/api/forms";
 
   /* ─── Mobile nav toggle ────────────────────────────────────── */
 
@@ -39,8 +39,34 @@
 
   /* ─── Newsletter form ──────────────────────────────────────── */
   //
-  // Store newsletter interest in Supabase. If the table is unavailable,
-  // fall back to a mailto draft so the lead is not lost.
+  // Submit to the Vercel/Resend form endpoint first. If Resend is not
+  // configured yet, fall back to a mailto draft so the lead is not lost.
+
+  async function submitForm(payload) {
+    const response = await fetch(FORMS_ENDPOINT, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        ...payload,
+        source_path: `${window.location.pathname}${window.location.hash}`,
+      }),
+    });
+
+    const result = await response.json().catch(() => ({}));
+    if (!response.ok || result.ok === false) {
+      const error = new Error(result.error || "Could not send form.");
+      error.code = result.code || "form_error";
+      throw error;
+    }
+    return result;
+  }
+
+  function openMailDraft(subject, lines) {
+    const body = encodeURIComponent(lines.map(([label, value]) => (
+      `${label}: ${(value || "").toString().trim() || "-"}`
+    )).join("\n"));
+    window.location.href = `mailto:julie@notablyrecruit.com?subject=${encodeURIComponent(subject)}&body=${body}`;
+  }
 
   const form = document.querySelector("[data-newsletter]");
   if (form) {
@@ -60,48 +86,31 @@
       if (status) status.textContent = "Saving...";
 
       try {
-        if (!SUPABASE_URL || !SUPABASE_ANON_KEY) throw new Error("Missing Supabase newsletter config.");
-
-        const response = await fetch(`${SUPABASE_URL}/rest/v1/${NEWSLETTER_TABLE}`, {
-          method: "POST",
-          headers: {
-            apikey: SUPABASE_ANON_KEY,
-            Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
-            "Content-Type": "application/json",
-            Prefer: "return=minimal",
-          },
-          body: JSON.stringify({
-            email,
-            source_path: `${window.location.pathname}${window.location.hash}`,
-            user_agent: window.navigator.userAgent,
-            status: "subscribed",
-          }),
+        await submitForm({
+          type: "newsletter",
+          email,
+          website: form.elements.website?.value || "",
         });
-
-        if (!response.ok) throw new Error(await response.text());
-
         if (status) status.textContent = "Thanks — you're on the list.";
         input.value = "";
       } catch (error) {
-        console.warn("Could not save newsletter signup.", error);
-        const subject = encodeURIComponent("Newsletter signup");
-        const body = encodeURIComponent(`Email: ${email}`);
+        console.warn("Could not send newsletter signup.", error);
         if (status) status.textContent = "Opening an email draft as backup...";
-        window.location.href = `mailto:julie@notablyrecruit.com?subject=${subject}&body=${body}`;
+        openMailDraft("Newsletter signup", [["Email", email]]);
       }
     });
   }
 
   /* ─── Start-a-search form ─────────────────────────────────── */
   //
-  // Static preview v1: compose a mailto draft from the intake fields.
-  // Swap this for a form backend when the production endpoint is chosen.
+  // Submit search details to Resend, with mailto fallback if the endpoint
+  // is not configured yet.
 
   const searchForm = document.querySelector("[data-search-form]");
   if (searchForm) {
     const status = searchForm.querySelector(".contact-form__status");
 
-    searchForm.addEventListener("submit", (event) => {
+    searchForm.addEventListener("submit", async (event) => {
       event.preventDefault();
 
       if (!searchForm.reportValidity()) return;
@@ -119,10 +128,27 @@
         .map(([label, value]) => `${label}: ${(value || "").toString().trim() || "-"}`)
         .join("\n");
 
-      const subject = encodeURIComponent("Starting a Search");
-      const body = encodeURIComponent(lines);
-      if (status) status.textContent = "Opening an email draft...";
-      window.location.href = `mailto:julie@notablyrecruit.com?subject=${subject}&body=${body}`;
+      if (status) status.textContent = "Sending...";
+
+      try {
+        await submitForm({
+          type: "search",
+          name: data.get("name"),
+          email: data.get("email"),
+          company: data.get("company"),
+          role: data.get("role"),
+          target_compensation: data.get("target_compensation"),
+          timing: data.get("timing"),
+          context: data.get("context"),
+          website: data.get("website"),
+        });
+        if (status) status.textContent = "Thanks — Julie will follow up soon.";
+        searchForm.reset();
+      } catch (error) {
+        console.warn("Could not send search form.", error);
+        if (status) status.textContent = "Opening an email draft as backup...";
+        openMailDraft("Starting a Search", [["Details", lines]]);
+      }
     });
   }
 

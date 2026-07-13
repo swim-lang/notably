@@ -8,7 +8,7 @@ A static marketing site for Notably (Julie Anich, accounting/finance/tax recruit
 notably-site/
 ├── index.html       Semantic markup for all 17 sections + nav/footer.
 ├── styles.css       Design tokens + responsive layout. Mirrors design-tokens.md.
-├── script.js        Mobile-nav toggle, newsletter form handling, anchor scroll.
+├── script.js        Mobile-nav toggle, Resend-ready form handling, anchor scroll.
 └── assets/
     └── julie.jpg    Portrait for the "Meet Julie" section. (Add this.)
 ```
@@ -49,7 +49,15 @@ Current launch setup:
 
 2. **Add Julie's portrait.** Save the image as `assets/julie.jpg` (or update the URL in `styles.css` under `.julie__photo`). Recommended size: ~1600×2000 px, JPG, under 500KB.
 
-3. **Newsletter form.** The newsletter form does not require a database by default. If no Supabase config is present, it opens a mailto draft so leads are not lost. Supabase persistence is available through `notably-newsletter-signups.sql` if the site needs it later.
+3. **Forms + Resend.** Newsletter signups and search inquiries post to `/api/forms`, a Vercel Function that sends via Resend. Add these Vercel production environment variables before treating the forms as fully live:
+
+   ```bash
+   RESEND_API_KEY=re_...
+   NOTABLY_FORM_TO=julie@notablyrecruit.com
+   NOTABLY_FORM_FROM="Notably <onboarding@resend.dev>"
+   ```
+
+   Use `onboarding@resend.dev` while testing. After `notablyrecruit.com` is verified in Resend, switch `NOTABLY_FORM_FROM` to a verified sender such as `Notably <hello@notablyrecruit.com>`. If Resend is not configured yet, the browser opens a prefilled mailto draft so leads are not lost.
 
 4. **Signature builder.** The private email signature utility lives at `signature.html`. It is intentionally excluded from navigation and uses `noindex, nofollow` metadata so search engines should not list it.
 
@@ -57,7 +65,7 @@ Current launch setup:
 
 6. **Add analytics.** Drop in your analytics snippet (Plausible, Fathom, GA4) before `</head>` once the production measurement tool is chosen.
 
-7. **Favicon.** Add a `favicon.ico` + apple-touch-icon to the root.
+7. **Favicon.** The root favicon bundle is generated from the Notably mark: `favicon.svg`, `favicon-16x16.png`, `favicon-32x32.png`, `apple-touch-icon.png`, and `icon-192.png`.
 
 ## Design tokens
 
