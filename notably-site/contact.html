@@ -23,7 +23,7 @@
     <meta name="twitter:title" content="Start a Search — Notably" />
     <meta name="twitter:description" content="Tell Notably about the accounting, finance, or tax hire you need to make." />
     <meta name="twitter:image" content="https://notablyrecruit.com/assets/logo-nav-yellow.png" />
-    <link rel="stylesheet" href="styles.css?v=yellow-main" />
+    <link rel="stylesheet" href="styles.css?v=julie-forms-1" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&family=Newsreader:ital,wght@0,400;1,400&display=swap" rel="stylesheet" />
@@ -63,13 +63,13 @@
             <p class="contact-hero__intro">Share the role, the team, and what would make the search successful. Julie will follow up with a practical next step for accounting, finance, or tax hiring.</p>
             <div class="contact-hero__ctas">
               <a class="btn btn--primary" href="https://calendly.com/janich-rimrp/search-conversation" target="_blank" rel="noopener">Schedule a Search Conversation</a>
-              <a class="btn btn--secondary" href="mailto:julie@notablyrecruit.com">Email Julie</a>
+              <a class="btn btn--secondary" href="#search-form">Email Julie</a>
             </div>
           </div>
 
           <aside class="contact-card" aria-label="Start a search form">
             <h2>Start with the basics.</h2>
-            <form class="contact-form" action="/api/forms" method="post" data-search-form>
+            <form class="contact-form" id="search-form" action="/api/forms" method="post" data-search-form>
               <input type="hidden" name="form_type" value="search" />
               <input type="text" name="website" tabindex="-1" autocomplete="off" hidden aria-hidden="true" />
               <div class="contact-form__row">
@@ -149,7 +149,7 @@
             </nav>
             <div class="footer__where">
               <span>Denver, Colorado</span>
-              <a href="mailto:julie@notablyrecruit.com">julie@notablyrecruit.com</a>
+              <a href="#search-form">julie@notablyrecruit.com</a>
             </div>
           </div>
         </div>
@@ -165,6 +165,6 @@
         supabaseAnonKey: "sb_publishable_pkRxxm6FCJgzgPN8gSa9SQ_oiBEsVzi",
       };
     </script>
-    <script src="script.js"></script>
+    <script src="script.js?v=julie-forms-1"></script>
   </body>
 </html>

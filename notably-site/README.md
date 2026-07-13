@@ -49,7 +49,7 @@ Current launch setup:
 
 2. **Add Julie's portrait.** Save the image as `assets/julie.jpg` (or update the URL in `styles.css` under `.julie__photo`). Recommended size: ~1600×2000 px, JPG, under 500KB.
 
-3. **Forms + Resend.** Newsletter signups and search inquiries post to `/api/forms`, a Vercel Function that sends via Resend. Add these Vercel production environment variables before treating the forms as fully live:
+3. **Forms + Resend.** Newsletter signups, search inquiries, and candidate resumes post to `/api/forms`, a Vercel Function that sends via Resend. Candidate resumes are accepted as PDF or Word files up to 2.5 MB and arrive as email attachments. Add these Vercel production environment variables before treating the forms as fully live:
 
    ```bash
    RESEND_API_KEY=re_...
@@ -57,11 +57,11 @@ Current launch setup:
    NOTABLY_FORM_FROM="Notably <onboarding@resend.dev>"
    ```
 
-   Use `onboarding@resend.dev` while testing. After `notablyrecruit.com` is verified in Resend, switch `NOTABLY_FORM_FROM` to a verified sender such as `Notably <hello@notablyrecruit.com>`. If Resend is not configured yet, the browser opens a prefilled mailto draft so leads are not lost.
+   Use `onboarding@resend.dev` while testing. After `notablyrecruit.com` is verified in Resend, switch `NOTABLY_FORM_FROM` to a verified sender such as `Notably <hello@notablyrecruit.com>`. Newsletter and search forms retain a prefilled email-draft fallback; resume delivery requires Resend because browsers cannot attach a local file to an email draft automatically.
 
 4. **Signature builder.** The private email signature utility lives at `signature.html`. It is intentionally excluded from navigation and uses `noindex, nofollow` metadata so search engines should not list it.
 
-5. **Update links.** The mailto links currently point to `julie@notablyrecruit.com`. If the final email changes, update those links before launch. The "About Julie" links scroll to an in-page anchor — if that becomes a separate page, replace `#julie` with the live URL.
+5. **Update links.** Julie's displayed email address and the contact-page "Email Julie" button route to the on-site search form so they work without a configured desktop mail app. The "About Julie" links scroll to an in-page anchor — if that becomes a separate page, replace `#julie` with the live URL.
 
 6. **Add analytics.** Drop in your analytics snippet (Plausible, Fathom, GA4) before `</head>` once the production measurement tool is chosen.
 

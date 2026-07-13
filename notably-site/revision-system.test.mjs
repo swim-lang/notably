@@ -124,6 +124,8 @@ for (const expected of [
   "assets/julie-intro.mp4",
   "assets/julie-video-poster.jpg",
   "data-video-toggle",
+  "julie__portrait",
+  "Founder, Recruitment Services",
   'action="/api/forms"',
   'name="form_type" value="newsletter"',
 ]) {
@@ -148,6 +150,9 @@ for (const expected of [
   "NOTABLY_FORM_TO",
   "NOTABLY_FORM_FROM",
   "resend_not_configured",
+  'type === "candidate"',
+  "attachments",
+  "MAX_RESUME_BYTES",
 ]) {
   assert.ok(formsApi.includes(expected), `Missing Resend forms contract: ${expected}`);
 }
@@ -158,6 +163,14 @@ assert.ok(
   "Missing candidate Calendly link",
 );
 assert.ok(candidate.includes("/favicon.svg"), "Missing candidate favicon");
+for (const expected of [
+  'href="#send-resume"',
+  "data-candidate-form",
+  'name="resume"',
+  'accept=".pdf,.doc,.docx',
+]) {
+  assert.ok(candidate.includes(expected), `Missing candidate resume contract: ${expected}`);
+}
 
 const contact = read("contact.html");
 for (const expected of [
@@ -165,6 +178,8 @@ for (const expected of [
   'action="/api/forms"',
   'name="form_type" value="search"',
   'name="website"',
+  'href="#search-form"',
+  'id="search-form"',
 ]) {
   assert.ok(contact.includes(expected), `Missing contact form contract: ${expected}`);
 }

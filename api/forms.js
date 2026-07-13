@@ -1,6 +1,7 @@
 const RESEND_ENDPOINT = "https://api.resend.com/emails";
 const FALLBACK_TO = "julie@notablyrecruit.com";
 const FALLBACK_FROM = "Notably <onboarding@resend.dev>";
+const MAX_RESUME_BYTES = 2.5 * 1024 * 1024;
 
 function json(res, status, body) {
   res.statusCode = status;
@@ -23,6 +24,33 @@ function escapeHtml(value) {
 
 function isEmail(value) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+}
+
+function readResume(payload) {
+  const resume = payload.resume;
+  if (!resume || typeof resume !== "object") {
+    return { error: "Please attach your resume." };
+  }
+
+  const filename = String(resume.filename || "")
+    .replace(/[^a-zA-Z0-9._ ()-]/g, "")
+    .trim()
+    .slice(0, 180);
+  const content = String(resume.content || "").replace(/\s/g, "");
+
+  if (!filename || !/\.(pdf|doc|docx)$/i.test(filename)) {
+    return { error: "Please attach a PDF or Word document." };
+  }
+  if (!content) {
+    return { error: "The attached resume is empty." };
+  }
+
+  const bytes = Buffer.from(content, "base64");
+  if (!bytes.length || bytes.length > MAX_RESUME_BYTES) {
+    return { error: "Please attach a resume smaller than 2.5 MB." };
+  }
+
+  return { attachment: { filename, content } };
 }
 
 async function readBody(req) {
@@ -71,6 +99,34 @@ function buildEmail(payload) {
       subject: "New Notably newsletter signup",
       text: rows.map(([label, value]) => `${label}: ${value}`).join("\n"),
       html: rowsToHtml("New newsletter signup", rows),
+    };
+  }
+
+  if (type === "candidate") {
+    const name = clean(payload.name, 180);
+    const linkedin = clean(payload.linkedin, 500);
+    const context = clean(payload.context, 2400);
+    const resume = readResume(payload);
+
+    if (!name || !context) {
+      return { error: "Please include your name and what you are looking for next." };
+    }
+    if (resume.error) return resume;
+
+    const rows = [
+      ["Name", name],
+      ["Email", email],
+      ["LinkedIn", linkedin],
+      ["Looking for", context],
+      ["Resume", resume.attachment.filename],
+      ["Source", source],
+    ];
+    return {
+      replyTo: email,
+      subject: `New Notably candidate: ${name}`,
+      text: rows.map(([label, value]) => `${label}: ${value || "-"}`).join("\n"),
+      html: rowsToHtml("New candidate introduction", rows),
+      attachments: [resume.attachment],
     };
   }
 
@@ -148,6 +204,7 @@ module.exports = async function handler(req, res) {
         subject: email.subject,
         text: email.text,
         html: email.html,
+        ...(email.attachments ? { attachments: email.attachments } : {}),
       }),
     });
 

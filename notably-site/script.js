@@ -68,6 +68,37 @@
     window.location.href = `mailto:julie@notablyrecruit.com?subject=${encodeURIComponent(subject)}&body=${body}`;
   }
 
+  function readResume(file) {
+    const maxBytes = 2.5 * 1024 * 1024;
+    const allowedExtension = /\.(pdf|doc|docx)$/i;
+
+    if (!file || !file.name) {
+      return Promise.reject(new Error("Please choose a resume to upload."));
+    }
+    if (!allowedExtension.test(file.name)) {
+      return Promise.reject(new Error("Please upload a PDF or Word document."));
+    }
+    if (file.size > maxBytes) {
+      return Promise.reject(new Error("Please choose a resume smaller than 2.5 MB."));
+    }
+
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.addEventListener("load", () => {
+        const encoded = String(reader.result || "").split(",")[1];
+        if (!encoded) {
+          reject(new Error("Could not read that resume. Please try another file."));
+          return;
+        }
+        resolve({ filename: file.name, content: encoded });
+      });
+      reader.addEventListener("error", () => {
+        reject(new Error("Could not read that resume. Please try another file."));
+      });
+      reader.readAsDataURL(file);
+    });
+  }
+
   const form = document.querySelector("[data-newsletter]");
   if (form) {
     const input = form.querySelector("input[type=email]");
@@ -148,6 +179,45 @@
         console.warn("Could not send search form.", error);
         if (status) status.textContent = "Opening an email draft as backup...";
         openMailDraft("Starting a Search", [["Details", lines]]);
+      }
+    });
+  }
+
+  /* ─── Candidate resume form ───────────────────────────────── */
+
+  const candidateForm = document.querySelector("[data-candidate-form]");
+  if (candidateForm) {
+    const status = candidateForm.querySelector(".contact-form__status");
+
+    candidateForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      if (!candidateForm.reportValidity()) return;
+
+      const data = new FormData(candidateForm);
+      const submitButton = candidateForm.querySelector("button[type=submit]");
+
+      if (status) status.textContent = "Uploading securely...";
+      if (submitButton) submitButton.disabled = true;
+
+      try {
+        const resume = await readResume(data.get("resume"));
+        await submitForm({
+          type: "candidate",
+          name: data.get("name"),
+          email: data.get("email"),
+          linkedin: data.get("linkedin"),
+          context: data.get("context"),
+          website: data.get("website"),
+          resume,
+        });
+        if (status) status.textContent = "Thanks — Julie received your resume.";
+        candidateForm.reset();
+      } catch (error) {
+        console.warn("Could not send candidate resume.", error);
+        if (status) status.textContent = error.message || "Could not send your resume. Please try again.";
+      } finally {
+        if (submitButton) submitButton.disabled = false;
       }
     });
   }

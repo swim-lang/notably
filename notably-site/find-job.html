@@ -23,7 +23,7 @@
     <meta name="twitter:title" content="Find a Job — Notably" />
     <meta name="twitter:description" content="Accounting, finance, and tax career conversations led by Julie Anich." />
     <meta name="twitter:image" content="https://notablyrecruit.com/assets/logo-nav-yellow.png" />
-    <link rel="stylesheet" href="styles.css?v=yellow-main" />
+    <link rel="stylesheet" href="styles.css?v=julie-forms-1" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&family=Newsreader:ital,wght@0,400;1,400&display=swap" rel="stylesheet" />
@@ -63,7 +63,7 @@
             <p class="candidate-page__intro">Julie talks with accounting, finance, and tax professionals who want a better read on the market, confidential opportunities, or the next role that actually makes sense.</p>
             <div class="candidate-page__ctas">
               <a class="btn btn--primary" href="https://calendly.com/janich-rimrp/introductory-conversation" target="_blank" rel="noopener">Talk to Julie</a>
-              <a class="btn btn--secondary" href="mailto:julie@notablyrecruit.com">Send Resume</a>
+              <a class="btn btn--secondary" href="#send-resume">Send Resume</a>
             </div>
           </div>
 
@@ -132,6 +132,41 @@
           </article>
         </div>
 
+        <section class="candidate-submit" id="send-resume" aria-labelledby="candidate-submit-title">
+          <div class="candidate-submit__copy">
+            <span>Confidential introduction</span>
+            <h2 id="candidate-submit-title">Send Julie your resume.</h2>
+            <p>Share what you are considering next. Julie will review it personally and follow up when there is a useful conversation to have.</p>
+          </div>
+          <form class="contact-form candidate-form" data-candidate-form>
+            <input type="hidden" name="form_type" value="candidate" />
+            <input type="text" name="website" tabindex="-1" autocomplete="off" hidden aria-hidden="true" />
+            <div class="contact-form__row">
+              <label for="candidate-name">Name</label>
+              <input id="candidate-name" name="name" type="text" autocomplete="name" required />
+            </div>
+            <div class="contact-form__row">
+              <label for="candidate-email">Email</label>
+              <input id="candidate-email" name="email" type="email" autocomplete="email" required />
+            </div>
+            <div class="contact-form__row">
+              <label for="candidate-linkedin">LinkedIn profile</label>
+              <input id="candidate-linkedin" name="linkedin" type="url" inputmode="url" placeholder="https://linkedin.com/in/..." />
+            </div>
+            <div class="contact-form__row">
+              <label for="candidate-context">What are you looking for next?</label>
+              <textarea id="candidate-context" name="context" rows="4" required></textarea>
+            </div>
+            <div class="contact-form__row">
+              <label for="candidate-resume">Resume</label>
+              <input id="candidate-resume" name="resume" type="file" accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" required />
+              <span class="candidate-form__file-note">PDF or Word, 2.5 MB maximum.</span>
+            </div>
+            <button class="btn btn--secondary contact-form__submit" type="submit">Send Resume</button>
+            <p class="contact-form__status" role="status" aria-live="polite"></p>
+          </form>
+        </section>
+
         <div class="candidate-closing" id="candidate-start">
           <h2>Ready for a better read on what comes next?</h2>
           <a class="btn btn--primary" href="https://calendly.com/janich-rimrp/introductory-conversation" target="_blank" rel="noopener">Schedule a Conversation</a>
@@ -154,7 +189,7 @@
             </nav>
             <div class="footer__where">
               <span>Denver, Colorado</span>
-              <a href="mailto:julie@notablyrecruit.com">julie@notablyrecruit.com</a>
+              <a href="contact.html#search-form">julie@notablyrecruit.com</a>
             </div>
           </div>
         </div>
@@ -170,6 +205,6 @@
         supabaseAnonKey: "sb_publishable_pkRxxm6FCJgzgPN8gSa9SQ_oiBEsVzi",
       };
     </script>
-    <script src="script.js"></script>
+    <script src="script.js?v=julie-forms-1"></script>
   </body>
 </html>
