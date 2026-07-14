@@ -7,6 +7,13 @@ const root = dirname(fileURLToPath(import.meta.url));
 const read = (path) => readFileSync(join(root, path), "utf8");
 
 const html = read("index.html");
+const publicPages = [
+  html,
+  read("find-job.html"),
+  read("contact.html"),
+  read("index-yellow.html"),
+  read("index-saturated.html"),
+];
 const script = read("script.js");
 const styles = read("styles.css");
 const signature = read("signature.html");
@@ -37,6 +44,14 @@ const expectedReviewIds = [
 for (const id of expectedReviewIds) {
   assert.match(html, new RegExp(`data-review-id="${id}"`), `Missing review target: ${id}`);
 }
+
+for (const page of publicPages) {
+  assert.doesNotMatch(page, /NOTABLY_REVIEW_CONFIG/, "Public pages must not enable revision mode");
+  assert.match(page, /script\.js\?v=launch-1/, "Public pages must load the launch script version");
+}
+
+assert.match(script, /const REVIEW_ENABLED = SITE_CONFIG\.enabled === true;/);
+assert.match(script, /if \(REVIEW_ENABLED\) \{\s*renderReviewChoice\(\);\s*\}/);
 
 for (const expected of [
   "notably-review-comments",
@@ -229,4 +244,4 @@ for (const expected of [
   assert.ok(vercelConfig.includes(expected), `Missing Vercel config contract: ${expected}`);
 }
 
-console.log("Revision system contract verified.");
+console.log("Notably launch contract verified.");

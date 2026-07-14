@@ -5,6 +5,7 @@
   "use strict";
 
   const SITE_CONFIG = window.NOTABLY_REVIEW_CONFIG || {};
+  const REVIEW_ENABLED = SITE_CONFIG.enabled === true;
   const SUPABASE_URL = (SITE_CONFIG.supabaseUrl || "").replace(/\/$/, "");
   const SUPABASE_ANON_KEY = SITE_CONFIG.supabaseAnonKey || "";
   const FORMS_ENDPOINT = "/api/forms";
@@ -876,6 +877,8 @@
     renderReviewPopover();
   }, true);
 
-  renderReviewChoice();
+  if (REVIEW_ENABLED) {
+    renderReviewChoice();
+  }
 
 })();

@@ -67,6 +67,8 @@ Current launch setup:
 
 7. **Favicon.** The root favicon bundle is generated from the Notably mark: `favicon.svg`, `favicon-16x16.png`, `favicon-32x32.png`, `apple-touch-icon.png`, and `icon-192.png`.
 
+8. **Revision mode.** The client revision layer remains in the codebase for future private review rounds, but public pages do not configure it and it defaults off. To temporarily restore it, define `window.NOTABLY_REVIEW_CONFIG` before `script.js` with `enabled: true` plus the existing Supabase URL and publishable key.
+
 ## Design tokens
 
 All visual decisions are documented in `../design-tokens.md`. When something changes — new color, new spacing value, etc. — update that file first, then mirror it into the `:root` block at the top of `styles.css`.
