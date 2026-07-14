@@ -11,6 +11,7 @@ const script = read("script.js");
 const styles = read("styles.css");
 const signature = read("signature.html");
 const robots = read("robots.txt");
+const sitemap = read("sitemap.xml");
 const vercelConfig = read("../vercel.json");
 const formsApi = read("../api/forms.js");
 
@@ -120,7 +121,12 @@ for (const expected of [
 
 for (const expected of [
   "https://notablyrecruit.com/",
-  "https://notablyrecruit.com/assets/logo-nav-yellow.png",
+  "https://notablyrecruit.com/assets/notably-social-preview.png",
+  'property="og:image:width" content="1200"',
+  'property="og:image:height" content="630"',
+  'name="twitter:image:alt"',
+  'name="theme-color" content="#F8F2A8"',
+  '"@type": "EmploymentAgency"',
   "https://calendly.com/janich-rimrp/search-conversation",
   "/favicon.svg",
   "/favicon-32x32.png",
@@ -149,6 +155,7 @@ for (const path of [
   "favicon-32x32.png",
   "apple-touch-icon.png",
   "icon-192.png",
+  "assets/notably-social-preview.png",
 ]) {
   assert.equal(existsSync(join(root, path)), true, `Missing favicon asset: ${path}`);
 }
@@ -173,6 +180,10 @@ assert.ok(
 );
 assert.ok(candidate.includes("/favicon.svg"), "Missing candidate favicon");
 for (const expected of [
+  'href="https://notablyrecruit.com/find-job"',
+  "https://notablyrecruit.com/assets/notably-social-preview.png",
+  'property="og:image:width" content="1200"',
+  '"@type": "WebPage"',
   'href="#send-resume"',
   "data-candidate-form",
   'name="resume"',
@@ -184,6 +195,10 @@ for (const expected of [
 const contact = read("contact.html");
 for (const expected of [
   "/favicon.svg",
+  'href="https://notablyrecruit.com/contact"',
+  "https://notablyrecruit.com/assets/notably-social-preview.png",
+  'property="og:image:width" content="1200"',
+  '"@type": "ContactPage"',
   'action="/api/forms"',
   'name="form_type" value="search"',
   'name="website"',
@@ -195,6 +210,15 @@ for (const expected of [
 
 assert.ok(robots.includes("Disallow: /notably/signature.html"), "Missing signature robots block");
 assert.ok(robots.includes("Disallow: /signature.html"), "Missing root-domain signature robots block");
+assert.ok(robots.includes("Sitemap: https://notablyrecruit.com/sitemap.xml"), "Missing sitemap directive");
+
+for (const expected of [
+  "https://notablyrecruit.com/",
+  "https://notablyrecruit.com/find-job",
+  "https://notablyrecruit.com/contact",
+]) {
+  assert.ok(sitemap.includes(expected), `Missing sitemap URL: ${expected}`);
+}
 
 for (const expected of [
   '"outputDirectory": "notably-site"',

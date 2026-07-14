@@ -1,4 +1,7 @@
 User-agent: *
+Allow: /
 Disallow: /signature
 Disallow: /signature.html
 Disallow: /notably/signature.html
+
+Sitemap: https://notablyrecruit.com/sitemap.xml
