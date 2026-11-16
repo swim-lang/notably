@@ -127,6 +127,10 @@
         input.value = "";
       } catch (error) {
         console.warn("Could not send newsletter signup.", error);
+        if (error.code !== "resend_not_configured") {
+          if (status) status.textContent = error.message || "Could not sign up. Please try again.";
+          return;
+        }
         if (status) status.textContent = "Opening an email draft as backup...";
         openMailDraft("Newsletter signup", [["Email", email]]);
       }
@@ -217,6 +221,10 @@
         searchForm.reset();
       } catch (error) {
         console.warn("Could not send search form.", error);
+        if (error.code !== "resend_not_configured") {
+          if (status) status.textContent = error.message || "Could not send your inquiry. Please try again.";
+          return;
+        }
         if (status) status.textContent = "Opening an email draft as backup...";
         openMailDraft("Starting a Search", [["Details", lines]]);
       }

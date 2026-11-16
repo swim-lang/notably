@@ -1,6 +1,6 @@
 # Notably — Site
 
-A static marketing site for Notably (Julie Anich, accounting/finance/tax recruiting). One page, no build step, deployable anywhere.
+A static marketing site for Notably (Julie Anich, accounting/finance/tax recruiting), with forms handled by a Vercel Function. A small build bundles the browser bot protection.
 
 ## Files
 
@@ -15,7 +15,15 @@ notably-site/
 
 ## Run locally
 
-No build tools required. Either:
+Install and build the bot protection from the repository root:
+
+```bash
+npm ci
+npm run build
+npm test
+```
+
+For a static visual preview:
 
 ```bash
 # Python 3 (built into macOS)
@@ -57,7 +65,11 @@ Current launch setup:
    NOTABLY_FORM_FROM="Notably <onboarding@resend.dev>"
    ```
 
-   Use `onboarding@resend.dev` while testing. After `notablyrecruit.com` is verified in Resend, switch `NOTABLY_FORM_FROM` to a verified sender such as `Notably <hello@notablyrecruit.com>`. Newsletter and search forms retain a prefilled email-draft fallback; resume delivery requires Resend because browsers cannot attach a local file to an email draft automatically.
+   Use `onboarding@resend.dev` while testing. After `notablyrecruit.com` is verified in Resend, switch `NOTABLY_FORM_FROM` to a verified sender such as `Notably <hello@notablyrecruit.com>`. Newsletter and search forms retain a prefilled email-draft fallback only when the server reports that Resend is not configured. Verification failures and other errors stay in the form; resume delivery requires Resend because browsers cannot attach a local file to an email draft automatically.
+
+   All forms use Vercel BotID Basic (free, no visible puzzle). `client/bot-protection.js` registers `POST /api/forms`; `npm run build` bundles it into `notably-site/bot-protection.js`, loaded before the form handlers on every page. `api/forms.js` verifies the browser before parsing submissions or sending email and fails closed if verification is unavailable. Client and server explicitly select `basic`, avoiding paid Deep Analysis. No new API keys are needed. The existing hidden honeypot remains in place. Verification is enforced on both Vercel previews and production; only explicit local `NODE_ENV=development` permits the SDK's development behavior.
+
+   Test a deployed browser submission with deliberately invalid input to confirm the request reaches input validation (HTTP 400) without emailing Julie. A direct POST without the browser challenge must return HTTP 403. Local API tests stub BotID and Resend and never deliver email.
 
 4. **Signature builder.** The private email signature utility lives at `signature.html`. It is intentionally excluded from navigation and uses `noindex, nofollow` metadata so search engines should not list it.
 

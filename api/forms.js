@@ -1,3 +1,5 @@
+const { checkBotId } = require("botid/server");
+
 const RESEND_ENDPOINT = "https://api.resend.com/emails";
 const FALLBACK_TO = "julie@notablyrecruit.com";
 const FALLBACK_FROM = "Notably <onboarding@resend.dev>";
@@ -173,6 +175,31 @@ module.exports = async function handler(req, res) {
   if (req.method !== "POST") {
     res.setHeader("Allow", "POST");
     return json(res, 405, { ok: false, error: "Method not allowed." });
+  }
+
+  // Verify before reading resumes or calling Resend. Never bypass on Vercel,
+  // including preview deployments, even if NODE_ENV is not set.
+  try {
+    const verification = await checkBotId({
+      developmentOptions: {
+        isDevelopment: process.env.NODE_ENV === "development" && !process.env.VERCEL,
+      },
+      advancedOptions: { checkLevel: "basic", headers: req.headers },
+    });
+    if (verification.isBot || !verification.isHuman) {
+      return json(res, 403, {
+        ok: false,
+        code: "verification_failed",
+        error: "We couldn't verify your browser. Please refresh the page and try again.",
+      });
+    }
+  } catch {
+    console.error("Notably browser verification unavailable");
+    return json(res, 503, {
+      ok: false,
+      code: "verification_unavailable",
+      error: "We couldn't verify your browser. Please refresh the page and try again.",
+    });
   }
 
   try {
