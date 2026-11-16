@@ -1,0 +1,14 @@
+{
+  "name": "notably",
+  "private": true,
+  "scripts": {
+    "build": "esbuild client/bot-protection.js --bundle --minify --platform=browser --target=es2020 --outfile=notably-site/bot-protection.js",
+    "test": "node --test test/*.test.cjs && node notably-site/revision-system.test.mjs"
+  },
+  "dependencies": {
+    "botid": "1.5.13"
+  },
+  "devDependencies": {
+    "esbuild": "0.28.2"
+  }
+}

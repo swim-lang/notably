@@ -47,7 +47,7 @@ for (const id of expectedReviewIds) {
 
 for (const page of publicPages) {
   assert.doesNotMatch(page, /NOTABLY_REVIEW_CONFIG/, "Public pages must not enable revision mode");
-  assert.match(page, /script\.js\?v=launch-1/, "Public pages must load the launch script version");
+  assert.match(page, /bot-protection\.js\?v=spam-1[\s\S]*script\.js\?v=spam-1/, "Public pages must load bot protection before the form handlers");
 }
 
 assert.match(script, /const REVIEW_ENABLED = SITE_CONFIG\.enabled === true;/);
@@ -237,7 +237,7 @@ for (const expected of [
 
 for (const expected of [
   '"outputDirectory": "notably-site"',
-  '"buildCommand": null',
+  '"buildCommand": "npm run build"',
   '"source": "/signature"',
   '"X-Robots-Tag"',
 ]) {
